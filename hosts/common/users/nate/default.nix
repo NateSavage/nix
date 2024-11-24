@@ -26,15 +26,15 @@ in {
       "wireshark"
     ];
 
-    openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile ../../../../home/nate/ssh.pub);
-    hashedPasswordFile = config.sops.secrets.nate-password.path;
+    #openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile ../../../../home/nate/ssh.pub);
+    #hashedPasswordFile = config.sops.secrets.nate-password.path;
     packages = [pkgs.home-manager];
   };
 
-  sops.secrets.nate-password = {
-    sopsFile = ../../secrets.yaml;
-    neededForUsers = true;
-  };
+  #sops.secrets.nate-password = {
+  #  sopsFile = ../../secrets.yaml;
+  #  neededForUsers = true;
+  #};
 
   #home-manager.users.nate = import ../../../../home/nate/${config.networking.hostName}.nix;
 

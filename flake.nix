@@ -53,6 +53,12 @@
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
 
+      # Windows Subsystem for Linux playground.
+      whisp = lib.nixosSystem {
+        modules = [./hosts/whisp];
+        specialArgs = {inherit inputs outputs;};
+      };
+
       # Personal machine.
       bbox = lib.nixosSystem {
         modules = [./hosts/bbox];
