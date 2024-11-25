@@ -10,6 +10,7 @@ in {
   users.users.nate = {
     isNormalUser = true;
     shell = pkgs.fish;
+    hashedPassword="";
     extraGroups = ifTheyExist [
       "audio"
       "docker"
