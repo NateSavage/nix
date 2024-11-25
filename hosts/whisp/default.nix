@@ -1,5 +1,7 @@
 {
   imports = [
+    ./hardware-configuration.nix
+    
     ../common/required
     ../../users/nate
 
