@@ -13,5 +13,5 @@
 
   networking = {
     hostName = "whisp";
-  }
+  };
 }
