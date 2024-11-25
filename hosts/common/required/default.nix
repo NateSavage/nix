@@ -10,6 +10,8 @@
     ../apps/nix-helper.nix
   ];
 
+  nix.settings.experimental-features = "nix-command flakes"
+
   boot.initrd.systemd.enable = true;
 
   home-manager.useGlobalPkgs = true;
