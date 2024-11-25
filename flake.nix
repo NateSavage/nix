@@ -1,5 +1,5 @@
 {
-  description = "Nate Savage's personal NixOS configurations. Forked from work by Misterio77.";
+  description = "Nate's personal NixOS configurations. Forked from Misterio77's flake.";
 
   inputs = {
     # Nix exosystem

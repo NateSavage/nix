@@ -7,6 +7,7 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ../apps/fish.nix
+    ../apps/nix-helper.nix
   ];
 
   boot.initrd.systemd.enable = true;
