@@ -53,23 +53,23 @@
         specialArgs = {inherit inputs outputs;};
       };
 
-      # Personal machine.
-      bbox = lib.nixosSystem {
-        modules = [./hosts/bbox];
-        specialArgs = {inherit inputs outputs;};
-      };
-
-      # Personal Server.
-      nox = lib.nixosSystem {
-         modules = [./hosts/nox];
-        specialArgs = {inherit inputs outputs;};
-      };
-
-      # Reverse proxy server.
-      guardian = lib.nixosSystem {
-         modules = [./hosts/guardian];
-        specialArgs = {inherit inputs outputs;};
-      };
+      ## Personal machine.
+      #bbox = lib.nixosSystem {
+      #  modules = [./hosts/bbox];
+      #  specialArgs = {inherit inputs outputs;};
+      #};
+#
+      ## Personal Server.
+      #nox = lib.nixosSystem {
+      #   modules = [./hosts/nox];
+      #  specialArgs = {inherit inputs outputs;};
+      #};
+#
+      ## Reverse proxy server.
+      #guardian = lib.nixosSystem {
+      #   modules = [./hosts/guardian];
+      #  specialArgs = {inherit inputs outputs;};
+      #};
     };
 
     # Standalone home-manager configuration entrypoint

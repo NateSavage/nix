@@ -1,10 +1,9 @@
 {
   imports = [
-    <nixos-wsl/modules>
-    #./services
-
-    ../common/core
+    ../common/required
     ../../users/nate
+
+    <nixos-wsl/modules>
   ];
 
   wsl.enable = true;
