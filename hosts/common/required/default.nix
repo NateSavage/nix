@@ -5,8 +5,7 @@
   outputs,
   ...
 }: {
-  imports =
-    [
+  imports = [
       inputs.home-manager.nixosModules.home-manager
       #./acme.nix
       #./auto-upgrade.nix
@@ -27,7 +26,6 @@
       #./kdeconnect.nix
       #./upower.nix
     ]
-    ++ (builtins.attrValues outputs.nixosModules);
 
   home-manager.useGlobalPkgs = true;
   home-manager.extraSpecialArgs = {
@@ -35,7 +33,6 @@
   };
 
   nixpkgs = {
-    overlays = builtins.attrValues outputs.overlays;
     config = {
       allowUnfree = true;
     };
