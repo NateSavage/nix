@@ -39,7 +39,7 @@ in {
   #  neededForUsers = true;
   #};
 
-  home-manager.users.nate = import ../../../../home/nate/${config.networking.hostName}.nix;
+  home-manager.users.nate = import ../../../../home/nate/on/${config.networking.hostName}.nix;
 
   #security.pam.services = {
   #  swaylock = {};

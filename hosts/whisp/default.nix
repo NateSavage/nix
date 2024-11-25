@@ -1,7 +1,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    
+
     ../common/required
     ../../users/nate
 
@@ -9,5 +9,9 @@
   ];
 
   wsl.enable = true;
-  wsl.defaultUser = "Nate";
+  wsl.defaultUser = "nate";
+
+  networking = {
+    hostName = "whisp";
+  }
 }
