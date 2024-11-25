@@ -7,7 +7,6 @@
   imports = [
     inputs.home-manager.nixosModules.home-manager
     ../apps/fish.nix
-    ../apps/nix-helper.nix
   ];
 
   nix.settings.experimental-features = "nix-command flakes";
