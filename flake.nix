@@ -76,7 +76,7 @@
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
 
-      "nate@whisper" = home-manager.lib.homeManagerConfiguration {
+      "nate@whisp" = home-manager.lib.homeManagerConfiguration {
         modules = [./home/nate/on/whisp.nix ];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = { inherit inputs outputs; };

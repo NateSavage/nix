@@ -4,7 +4,7 @@
 
 { config, pkgs, ... }:
 {
-  programs.git = { enable = true; }
+  programs.git = { enable = true; };
   nix.settings.experimental-features = "nix-command flakes";
   programs.nh = {  enable = true; };
 }
