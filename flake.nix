@@ -34,14 +34,14 @@
     );
   in {
     inherit lib;
-    nixosModules = import ./modules/nixos;
-    homeManagerModules = import ./modules/home-manager;
+    #nixosModules = import ./modules/nixos;
+    #homeManagerModules = import ./modules/home-manager;
 
-    overlays = import ./overlays {inherit inputs outputs;};
+    #overlays = import ./overlays {inherit inputs outputs;};
 
     # Accessible through 'nix build', 'nix shell', etc
-    packages = forEachSystem (pkgs: import ./pkgs {inherit pkgs;});
-    devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
+    #packages = forEachSystem (pkgs: import ./pkgs {inherit pkgs;});
+    #devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
 
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
@@ -74,25 +74,25 @@
 
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
-    homeConfigurations = {
-      
-      "nate@bbox" = home-manager.lib.homeManagerConfiguration {
-        modules = [./home/nate/bbox.nix ./home/nate/nixpkgs.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
-      };
-
-      "nate@nox" = home-manager.lib.homeManagerConfiguration {
-        modules = [./home/nate/nox.nix ./home/nate/nixpkgs.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
-      };
-
-      "nate@guardian" = home-manager.lib.homeManagerConfiguration {
-        modules = [./home/nate/guardian.nix ./home/nate/nixpkgs.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
-      };
-    };
+    #homeConfigurations = {
+    #  
+    #  "nate@bbox" = home-manager.lib.homeManagerConfiguration {
+    #    modules = [./home/nate/bbox.nix ./home/nate/nixpkgs.nix];
+    #    pkgs = pkgsFor.x86_64-linux;
+    #    extraSpecialArgs = { inherit inputs outputs; };
+    #  };
+#
+    #  "nate@nox" = home-manager.lib.homeManagerConfiguration {
+    #    modules = [./home/nate/nox.nix ./home/nate/nixpkgs.nix];
+    #    pkgs = pkgsFor.x86_64-linux;
+    #    extraSpecialArgs = { inherit inputs outputs; };
+    #  };
+#
+    #  "nate@guardian" = home-manager.lib.homeManagerConfiguration {
+    #    modules = [./home/nate/guardian.nix ./home/nate/nixpkgs.nix];
+    #    pkgs = pkgsFor.x86_64-linux;
+    #    extraSpecialArgs = { inherit inputs outputs; };
+    #  };
+    #};
   };
 }

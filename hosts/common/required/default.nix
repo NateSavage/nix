@@ -10,7 +10,7 @@
       inputs.home-manager.nixosModules.home-manager
       #./acme.nix
       #./auto-upgrade.nix
-      ./fish.nix
+      ../apps/fish.nix
       #./locale.nix
       #./nix.nix
       #./openssh.nix
@@ -19,7 +19,7 @@
       #./sops.nix
       #./ssh-serve-store.nix
       #./steam-hardware.nix
-      ./systemd-initrd.nix
+      ../apps/systemd-initrd.nix
       #./tailscale.nix
       #./gamemode.nix
       #./nix-ld.nix

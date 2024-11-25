@@ -4,7 +4,7 @@
     ./hardware-configuration.nix
 
     ../common/core
-    ../common/users/nate
+    ../../users/nate
   ];
 
   networking = {

@@ -4,7 +4,7 @@
     #./services
 
     ../common/core
-    ../common/users/nate
+    ../../users/nate
   ];
 
   wsl.enable = true;

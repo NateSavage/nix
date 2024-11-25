@@ -28,7 +28,9 @@ in {
 
     #openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile ../../../../home/nate/ssh.pub);
     #hashedPasswordFile = config.sops.secrets.nate-password.path;
-    packages = [pkgs.home-manager];
+    packages = [
+      pkgs.home-manager
+    ];
   };
 
   #sops.secrets.nate-password = {
