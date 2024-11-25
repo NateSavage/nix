@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   imports = [
     ../required
-    ../apps/git
+    ../feature-sets/nix-management.nix
   ];
 }

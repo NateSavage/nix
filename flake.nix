@@ -74,25 +74,14 @@
 
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
-    #homeConfigurations = {
-    #  
-    #  "nate@bbox" = home-manager.lib.homeManagerConfiguration {
-    #    modules = [./home/nate/bbox.nix ./home/nate/nixpkgs.nix];
-    #    pkgs = pkgsFor.x86_64-linux;
-    #    extraSpecialArgs = { inherit inputs outputs; };
-    #  };
-#
-    #  "nate@nox" = home-manager.lib.homeManagerConfiguration {
-    #    modules = [./home/nate/nox.nix ./home/nate/nixpkgs.nix];
-    #    pkgs = pkgsFor.x86_64-linux;
-    #    extraSpecialArgs = { inherit inputs outputs; };
-    #  };
-#
-    #  "nate@guardian" = home-manager.lib.homeManagerConfiguration {
-    #    modules = [./home/nate/guardian.nix ./home/nate/nixpkgs.nix];
-    #    pkgs = pkgsFor.x86_64-linux;
-    #    extraSpecialArgs = { inherit inputs outputs; };
-    #  };
-    #};
+    homeConfigurations = {
+
+      "nate@whisper" = home-manager.lib.homeManagerConfiguration {
+        modules = [./home/nate/on/whisp.nix ];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = { inherit inputs outputs; };
+      };
+      
+    };
   };
 }

@@ -1,3 +1,3 @@
 {pkgs, ...}: {
-  imports = [../apps/git];
+  imports = [../apps/git.nix];
 }
