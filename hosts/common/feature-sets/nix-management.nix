@@ -1,5 +1,5 @@
 {pkgs, ...}: {
   imports = [
-    ../apps/git.nix
+    ../apps/nix-helper.nix
   ];
 }
