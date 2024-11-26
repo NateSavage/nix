@@ -7,8 +7,6 @@
   ...
 }: 
 {
-
-
   nix = {
     package = lib.mkDefault pkgs.nix;
     settings = {
@@ -17,20 +15,21 @@
         "flakes"
         #"ca-derivations"
       ];
-      #warn-dirty = false;
+      warn-dirty = false;
     };
   };
 
-  programs = {
-    home-manager.enable = true;
-  };
-
+  programs.home-manager.enable = true;
   home = {
-    username = lib.mkDefault "nate";
-    homeDirectory = lib.mkDefault "/home/${config.home.username}";
+    username = "nate";
+    homeDirectory = "/home/${config.home.username}";
     stateVersion = lib.mkDefault "24.05";
     sessionPath = ["$HOME"];
     sessionVariables = {
       FLAKE = "$HOME/Nix";
   };
+
+  #programs = {
+    
+  #};
 }
