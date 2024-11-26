@@ -5,18 +5,14 @@
   ...
 }: {
   imports = [
-    inputs.home-manager.nixosModules.home-manager
+    ../apps/home-manager.nix
     ../apps/fish.nix
+
   ];
 
   nix.settings.experimental-features = "nix-command flakes";
 
   boot.initrd.systemd.enable = true;
-
-  home-manager.useGlobalPkgs = true;
-  home-manager.extraSpecialArgs = {
-    inherit inputs outputs;
-  };
 
   nixpkgs = {
     config = {
