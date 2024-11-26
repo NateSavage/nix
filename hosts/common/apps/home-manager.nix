@@ -1,4 +1,5 @@
 # https://nix-community.github.io/home-manager/index.xhtml#ch-installation
+# depends on git
 
 { inputs, pkgs, outputs, ... }: {
 
@@ -12,6 +13,8 @@
       experimental-features = nix-command flakes
     '';
   };
+
+  programs.git = { enable = true; };
 
   home-manager.useGlobalPkgs = true;
   home-manager.extraSpecialArgs = {
