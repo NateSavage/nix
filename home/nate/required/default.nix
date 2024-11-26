@@ -27,6 +27,7 @@
     sessionPath = ["$HOME"];
     sessionVariables = {
       FLAKE = "$HOME/Nix";
+    };
   };
 
   #programs = {
