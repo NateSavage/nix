@@ -1,6 +1,10 @@
 # https://nix-community.github.io/home-manager/index.xhtml#ch-installation
 
 {
+  inputs,
+  outputs,
+  ...
+}: {
   # uncertain if this is needed
   #imports = [
   #  inputs.home-manager.nixosModules.home-manager
