@@ -16,4 +16,7 @@
   networking = {
     hostName = "whisp";
   };
+
+  # I think I want to move this outside of the host and into the flake at the top level
+  system.stateVersion = "24.05";
 }
