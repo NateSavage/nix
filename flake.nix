@@ -13,6 +13,8 @@
 
     hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:misterio77/impermanence";
+
+    superfile.url = "github:yorukot/superfile";
   };
 
   outputs = {

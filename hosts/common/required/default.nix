@@ -3,8 +3,9 @@
 {inputs, outputs, ...}: {
   imports = [
     ../feature-sets/nix-core.nix
-    ../apps/fish.nix
+    ../feature-sets/nix-utils.nix
 
+    ../apps/fish.nix
   ];
 
   nix.settings.experimental-features = "nix-command flakes";
