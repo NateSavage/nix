@@ -34,7 +34,7 @@
     };
 
   fileSystems."/mnt/wslg/distro" =
-    { device = "none";
+    { device = "";
       fsType = "none";
       options = [ "bind" ];
     };
