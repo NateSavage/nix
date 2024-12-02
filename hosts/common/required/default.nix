@@ -1,11 +1,8 @@
 # This file holds config that are used on all hosts
-{
-  inputs,
-  outputs,
-  ...
-}: {
+
+{inputs, outputs, ...}: {
   imports = [
-    ../apps/home-manager.nix
+    ../feature-sets/nix-core.nix
     ../apps/fish.nix
 
   ];

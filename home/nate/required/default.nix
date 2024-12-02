@@ -1,12 +1,4 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  config,
-  outputs,
-  ...
-}: 
-{
+{ inputs, lib, pkgs, config, outputs, ... }: {
   nix = {
     package = lib.mkDefault pkgs.nix;
     settings = {
@@ -29,6 +21,8 @@
       FLAKE = "$HOME/Nix";
     };
   };
+
+  # we need to include our git configuration in here
 
   #programs = {
     

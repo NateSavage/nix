@@ -1,4 +1,4 @@
-{ outputs, lib, config, ... }: let
+{outputs, lib, config, ...}: let
 
   hosts = lib.attrNames outputs.nixosConfigurations;
 

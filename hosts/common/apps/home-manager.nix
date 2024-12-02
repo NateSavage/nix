@@ -1,5 +1,6 @@
 # https://nix-community.github.io/home-manager/index.xhtml#ch-installation
 # depends on git
+# depends on experimental flakes features
 
 { inputs, pkgs, outputs, ... }: {
 
