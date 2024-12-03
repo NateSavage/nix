@@ -6,6 +6,7 @@
     ../feature-sets/nix-utils.nix
 
     ../apps/fish.nix
+    ../apps/just.nix
   ];
 
   boot.initrd.systemd.enable = true;
