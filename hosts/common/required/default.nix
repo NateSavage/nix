@@ -8,14 +8,10 @@
     ../apps/fish.nix
   ];
 
-  nix.settings.experimental-features = "nix-command flakes";
-
   boot.initrd.systemd.enable = true;
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
+  nixpkgs.config = {
+    allowUnfree = true;
   };
 
   hardware.enableRedistributableFirmware = true;
