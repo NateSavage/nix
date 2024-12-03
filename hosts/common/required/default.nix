@@ -1,6 +1,6 @@
 # This file holds config that are used on all hosts
 
-{inputs, outputs, ...}: {
+{ ...}: {
   imports = [
     ../feature-sets/nix-core.nix
     ../feature-sets/nix-utils.nix

@@ -1,4 +1,4 @@
-{ inputs, lib, pkgs, config, outputs, ... }: {
+{ lib, pkgs, config, ... }: {
   nix = {
     package = lib.mkDefault pkgs.nix;
     settings = {
