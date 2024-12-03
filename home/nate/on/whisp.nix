@@ -2,6 +2,6 @@
   imports = [
     ../required
 
-    #../apps/superfile.nix
+    ../apps/superfile.nix
   ];
 }

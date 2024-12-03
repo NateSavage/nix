@@ -21,10 +21,4 @@
       FLAKE = "$HOME/Nix";
     };
   };
-
-  # we need to include our git configuration in here
-
-  #programs = {
-    
-  #};
 }

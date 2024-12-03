@@ -1,9 +1,9 @@
 # spf (superfile) https://github.com/yorukot/superfile
-{inputs}:{
+{inputs, config, ...}:{
 
-  home.packages = home.packages ++ [
+  home.packages = [
+    #TODO: feed the host platform into the module as a variable
     # hostPlatform will probably look like "x86_64-linux"
-    inputs.superfile.packages.${nixpkgs.hostPlatform}.default
+    inputs.superfile.packages.x86_64-linux.default
   ];
-
 }
