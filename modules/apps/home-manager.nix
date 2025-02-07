@@ -2,14 +2,14 @@
 # depends on git
 # depends on experimental flakes features
 
-{ inputs, pkgs, outputs, ... }: {
+{ inputs, nixpkgs, outputs, ... }: {
 
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = nixpkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
     '';

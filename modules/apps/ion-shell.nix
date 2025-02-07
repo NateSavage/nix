@@ -1,6 +1,6 @@
 # https://gitlab.redox-os.org/redox-os/ion
-{ pkgs, ... }: {
+{ nixpkgs, ... }: {
   environment.systemPackages = [
-    pkgs.ion
+    nixpkgs.ion
   ];
 }

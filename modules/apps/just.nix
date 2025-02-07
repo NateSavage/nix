@@ -1,7 +1,7 @@
 # just a command runner https://github.com/casey/just
 
-{pkgs, ...}: {
+{nixpkgs, ...}: {
   environment.systemPackages = [ 
-    pkgs.just 
+    nixpkgs.just 
   ];
 }
