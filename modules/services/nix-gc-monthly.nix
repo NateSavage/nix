@@ -1,3 +1,5 @@
+# regularly clean out
+
 { pkgs, ... }:
 {
   environment.packages = [ pkgs.nh ];

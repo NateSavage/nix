@@ -1,3 +1,3 @@
-{ ...}: {
-  imports = [./common];
+{pkgs, ...}: {
+  imports = [../required];
 }
