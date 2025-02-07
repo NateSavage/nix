@@ -1,5 +1,3 @@
-# This file holds config that are used on all hosts
-
 { ...}: {
   imports = [
     ../feature-sets/nix-core.nix

@@ -1,11 +1,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-
-    ../common/required
-    ../../users/nate
-
     <nixos-wsl/modules>
+
+    ../../modules/always
+    ../../users/nate
   ];
 
   wsl.enable = true;

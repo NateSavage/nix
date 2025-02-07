@@ -1,5 +1,5 @@
 {
-  description = "Nate's personal NixOS configurations. Forked from Misterio77's flake.";
+  description = "Nate's personal NixOS Mono-Flake.";
 
   inputs = {
     # Nix exosystem
@@ -50,27 +50,16 @@
 
       # Windows Subsystem for Linux playground.
       whisp = lib.nixosSystem {
-        modules = [./hosts/whisp];
+        modules = [./hosts/whisp/configuration.nix];
         specialArgs = {inherit inputs outputs;};
       };
 
-      ## Personal machine.
-      #bbox = lib.nixosSystem {
-      #  modules = [./hosts/bbox];
-      #  specialArgs = {inherit inputs outputs;};
-      #};
-#
       ## Personal Server.
-      #nox = lib.nixosSystem {
-      #   modules = [./hosts/nox];
-      #  specialArgs = {inherit inputs outputs;};
-      #};
-#
-      ## Reverse proxy server.
-      #guardian = lib.nixosSystem {
-      #   modules = [./hosts/guardian];
-      #  specialArgs = {inherit inputs outputs;};
-      #};
+      nox = lib.nixosSystem {
+        modules = [./hosts/nox/configuration.nix];
+        specialArgs = {inherit inputs outputs;};
+      };
+
     };
 
     # Standalone home-manager configuration entrypoint
@@ -78,11 +67,16 @@
     homeConfigurations = {
 
       "nate@whisp" = lib.homeManagerConfiguration {
-        modules = [ ./home/nate/on/whisp.nix ];
+        modules = [ ./home/nate/at/whisp.nix ];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = { inherit inputs outputs; };
       };
-      
+
+      "nate@nox" = lib.homeManagerConfiguration {
+        modules = [ ./home/nate/at/nox.nix ];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = { inherit inputs outputs; };
+      };
     };
   };
 }

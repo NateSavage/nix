@@ -1,6 +1,6 @@
-{ ...}: {
+{
   imports = [
-    ../required
+    ../always
 
     ../apps/superfile.nix
   ];

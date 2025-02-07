@@ -1,9 +1,8 @@
 {
   imports = [
-    ./services
     ./hardware-configuration.nix
 
-    ../common/core
+    ../../modules/always
     ../../users/nate
   ];
 
