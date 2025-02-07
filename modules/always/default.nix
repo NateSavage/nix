@@ -1,4 +1,4 @@
-{ ...}: {
+{ nixpkgs, ...}: {
   imports = [
     ../feature-sets/nix-core.nix
     ../feature-sets/nix-utils.nix

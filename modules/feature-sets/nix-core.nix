@@ -1,5 +1,3 @@
-
-
 {
   imports = [
     ../apps/ion-shell.nix
