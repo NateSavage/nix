@@ -1,3 +1,3 @@
-{pkgs, ...}: {
+{nixpkgs, ...}: {
   imports = [../required];
 }

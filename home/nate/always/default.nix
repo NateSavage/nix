@@ -1,6 +1,6 @@
-{ lib, pkgs, config, ... }: {
+{ lib, nixpkgs, config, ... }: {
   nix = {
-    package = lib.mkDefault pkgs.nix;
+    package = lib.mkDefault nixpkgs.nix;
     settings = {
       experimental-features = [
         "nix-command"

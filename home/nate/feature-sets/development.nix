@@ -1,5 +1,5 @@
 {
   imports = [
-    ../apps/git.nix
+    ../app-configs/git.nix
   ];
 }
