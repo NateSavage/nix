@@ -1,4 +1,4 @@
-{pkgs, config, ...}: let
+{nixpkgs, config, ...}: let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in {
   users.mutableUsers = false;
@@ -25,7 +25,7 @@ in {
     #openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile ../../../../home/nate/ssh.pub);
     #hashedPasswordFile = config.sops.secrets.nate-password.path;
     packages = [
-      pkgs.home-manager
+      nixpkgs.home-manager
     ];
   };
 
