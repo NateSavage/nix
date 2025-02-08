@@ -4,7 +4,7 @@ in {
   users.mutableUsers = false;
   users.users.nate = {
     isNormalUser = true;
-    shell = pkgs.fish;
+    shell = nixpkgs.fish;
     hashedPassword="";
     extraGroups = ifTheyExist [
       "audio"
