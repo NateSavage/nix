@@ -24,9 +24,9 @@ in {
 
     #openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile ../../../../home/nate/ssh.pub);
     #hashedPasswordFile = config.sops.secrets.nate-password.path;
-    packages = [
-      nixpkgs.home-manager
-    ];
+    #packages = [
+    #  nixpkgs.home-manager
+    #];
   };
 
   #sops.secrets.nate-password = {
@@ -34,7 +34,7 @@ in {
   #  neededForUsers = true;
   #};
 
-  home-manager.users.nate = import ../../home/nate/at/${config.networking.hostName}.nix;
+ # home-manager.users.nate = import ../../home/nate/at/${config.networking.hostName}.nix;
 
   #security.pam.services = {
   #  swaylock = {};
