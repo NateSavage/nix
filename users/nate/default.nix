@@ -1,10 +1,10 @@
-{nixpkgs, config, ...}: let
+{config, ...}: let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in {
   users.mutableUsers = false;
   users.users.nate = {
     isNormalUser = true;
-    shell = nixpkgs.fish;
+    #shell = nixpkgs.fish;
     hashedPassword="";
     extraGroups = ifTheyExist [
       "audio"
