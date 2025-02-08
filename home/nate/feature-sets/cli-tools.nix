@@ -1,5 +1,5 @@
 {
   imports = [
-    ../apps/superfile.nix
+    
   ];
 }
