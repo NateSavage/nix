@@ -1,24 +1,9 @@
-{ lib, pkgs, config, ... }: {
-  nix = {
-    package = lib.mkDefault pkgs.nix;
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-        #"ca-derivations"
-      ];
-      warn-dirty = false;
-    };
-  };
+# stuff I want on all of my machines
 
-  programs.home-manager.enable = true;
-  home = {
-    username = "nate";
-    homeDirectory = "/home/${config.home.username}";
-    stateVersion = lib.mkDefault "24.05";
-    sessionPath = ["$HOME"];
-    sessionVariables = {
-      FLAKE = "$HOME/Nix";
-    };
-  };
+{
+  imports = [
+  	../feature-sets/cli-tools.nix
+  	
+    ../apps/home-manager.nix
+  ];
 }

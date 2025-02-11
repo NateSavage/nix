@@ -1,19 +1,20 @@
 {
-  description = "Nate's personal NixOS Mono-Flake.";
+  description = "Nate's personal NixOS mono-flake.";
 
   inputs = {
     # Nix exosystem
+    hardware.url = "github:nixos/nixos-hardware";
+    systems.url = "github:nix-systems/default-linux";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    systems.url = "github:nix-systems/default-linux";
 
-    # Home manager
+
+    # Home Manager
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    hardware.url = "github:nixos/nixos-hardware";
+	# Additional flake dependencies
     impermanence.url = "github:misterio77/impermanence";
-
     superfile.url = "github:yorukot/superfile";
   };
 
@@ -24,9 +25,11 @@
     home-manager,
     systems,
     ...
-  } @ inputs: let
+  } @inputs: let
     inherit (self) outputs;
+    # lib is a nix convention for where to helper functions
     lib = nixpkgs.lib // home-manager.lib;
+    forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
     pkgsFor = lib.genAttrs (import systems) (
       system:
         import nixpkgs {
@@ -35,10 +38,10 @@
         }
     );
   in {
+
     inherit lib;
     #nixosModules = import ./modules/nixos;
     #homeManagerModules = import ./modules/home-manager;
-
     #overlays = import ./overlays {inherit inputs outputs;};
 
     # Accessible through 'nix build', 'nix shell', etc

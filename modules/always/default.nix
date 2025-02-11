@@ -1,20 +1,9 @@
-{ nixpkgs, ...}: {
+# installed programs shared by all hosts
+{
   imports = [
     ../feature-sets/nix-core.nix
     ../feature-sets/nix-utils.nix
-
-    ../apps/fish.nix
-    ../apps/just.nix
+    
+	../feature-sets/linux-utils-core.nix 
   ];
-
-  boot.initrd.systemd.enable = true;
-
-  nixpkgs.config = {
-    allowUnfree = true;
-  };
-
-  hardware.enableRedistributableFirmware = true;
-
-  # Cleanup stuff included by default
-  #services.speechd.enable = false;
 }

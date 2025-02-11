@@ -5,7 +5,7 @@ in {
   users.users.nate = {
     isNormalUser = true;
     #shell = nixpkgs.fish;
-    hashedPassword="";
+    hashedPassword="$y$j9T$u3miKRe0i9J4A0x4WRZxY/$nTZTaJlqQ9MWL/SGA5CJVAKFi0jhOHSriSVMswwkVm4";
     extraGroups = ifTheyExist [
       "audio"
       "docker"
@@ -34,7 +34,7 @@ in {
   #  neededForUsers = true;
   #};
 
- # home-manager.users.nate = import ../../home/nate/at/${config.networking.hostName}.nix;
+  home-manager.users.nate = import ../../home/nate/at/${config.networking.hostName}.nix;
 
   #security.pam.services = {
   #  swaylock = {};

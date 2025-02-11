@@ -1,3 +1,4 @@
+
 {
   programs.git = {
     enable = true;
@@ -7,5 +8,7 @@
     #  signByDefault = true;
     #  key = "";
     #};
+
+    lfs.enable = true;
   };
 }

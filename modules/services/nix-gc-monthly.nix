@@ -1,7 +1,7 @@
 # regularly clean out
 
-{ pkgs, ... }:
+{ nixpkgs, ... }:
 {
-  environment.packages = [ pkgs.nh ];
+  environment.packages = [ nixpkgs.nh ];
   programs.nh = { enable = true; };
 }

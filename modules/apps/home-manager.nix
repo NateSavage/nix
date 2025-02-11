@@ -2,23 +2,23 @@
 # depends on git
 # depends on experimental flakes features
 
-{ inputs, nixpkgs, outputs, ... }: {
+{ inputs, config, pkgs, outputs, ... }: {
 
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
 
-  nix = {
-    package = nixpkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+  config = {
+  	nix = {
+      package = pkgs.nixFlakes;
+      extraOptions = ''
+        experimental-features = nix-command flakes
+      '';
+    };
+
+    programs.git.enable = true;
+
+    home-manager.extraSpecialArgs = { inherit inputs outputs; };
   };
 
-  programs.git = { enable = true; };
-
-  home-manager.useGlobalPkgs = true;
-  home-manager.extraSpecialArgs = {
-    inherit inputs outputs;
-  };
 }

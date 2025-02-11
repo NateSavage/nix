@@ -1,0 +1,9 @@
+# Basic tools I want on all linux systems
+
+{ config, pkgs, ...}: {
+	imports = [
+	  ../apps/micro.nix
+	  ../apps/ion-shell.nix
+	  ../apps/just.nix
+	];
+}

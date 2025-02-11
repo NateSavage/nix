@@ -1,4 +1,4 @@
-{outputs, lib, config, ...}: let
+{nixpkgs, outputs, lib, config, ...}: let
 
   hosts = lib.attrNames outputs.nixosConfigurations;
 
@@ -54,8 +54,8 @@ in {
       rules.auth.rssh = {
         order = config.rules.auth.ssh_agent_auth.order - 1;
         control = "sufficient";
-        modulePath = "${pkgs.pam_rssh}/lib/libpam_rssh.so";
-        settings.authorized_keys_command = pkgs.writeShellScript "get-authorized-keys" ''
+        modulePath = "${nixpkgs.pam_rssh}/lib/libpam_rssh.so";
+        settings.authorized_keys_command = nixpkgs.writeShellScript "get-authorized-keys" ''
           cat "/etc/ssh/authorized_keys.d/$1"
         '';
       };
