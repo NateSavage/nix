@@ -2,7 +2,7 @@
   description = "Nate's personal NixOS mono-flake.";
 
   inputs = {
-    # Nix exosystem
+    # Nix ecosystem
     hardware.url = "github:nixos/nixos-hardware";
     systems.url = "github:nix-systems/default-linux";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
@@ -12,6 +12,12 @@
     # Home Manager
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    
+    # Secrets Management
+    sops-nix = {
+      url = "github:mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
 	# Additional flake dependencies
     impermanence.url = "github:misterio77/impermanence";
