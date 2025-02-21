@@ -70,6 +70,12 @@
         specialArgs = {inherit inputs outputs;};
       };
 
+      ## Personal Server.
+      snek = lib.nixosSystem {
+        modules = [./hosts/snek/configuration.nix];
+        specialArgs = {inherit inputs outputs;};
+      };
+
     };
 
     # Standalone home-manager configuration entrypoint
@@ -84,6 +90,12 @@
 
       "nate@nox" = lib.homeManagerConfiguration {
         modules = [ ./home/nate/at/nox.nix ];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = { inherit inputs outputs; };
+      };
+
+      "nate@snek" = lib.homeManagerConfiguration {
+        modules = [ ./home/nate/at/snek.nix ];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = { inherit inputs outputs; };
       };
