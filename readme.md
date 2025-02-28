@@ -75,7 +75,7 @@ I'm assuming that since you're looking at nix configurations, you've already fig
 get comfortable with the language and basics of configuring nix before using these. I suggest you learn these in the order they're listed.
 
 - [home-manager](https://github.com/nix-community/home-manager), configure your home directory and application configs using nix. (availble for MacOS as well!)
-- [nix-sops](https://github.com/Mic92/sops-nix), wrapper for Mozilla [secret operations](https://github.com/getsops/sops). will allow you to safely have password protected system configurations stored in public places for easy access. I suggest reading the [Handling Secrets in NixOS](https://lgug2z.com/articles/handling-secrets-in-nixos-an-overview/) by [LGUG2Z](https://github.com/LGUG2Z).
+- [nix-sops](https://github.com/Mic92/sops-nix), wrapper for Mozilla [secret operations](https://github.com/getsops/sops). will allow you to safely have password protected system configurations stored in public places for easy access. I suggest reading [Handling Secrets in NixOS](https://lgug2z.com/articles/handling-secrets-in-nixos-an-overview/) by [LGUG2Z](https://github.com/LGUG2Z).
 - [disko](https://github.com/nix-community/disko) declare your disk partitions and formats using nix.
 - [impermenance](https://github.com/nix-community/impermanence) declare what should be kept on your system using nix, regularly wipe the rest.
 - [nixos-anywhere](https://github.com/nix-community/nixos-anywhere) hijack most Linux system you can ssh into, and overwrite it with one of your nix configurations.
