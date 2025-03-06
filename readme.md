@@ -67,6 +67,7 @@ I'm assuming that since you're looking at nix configurations, you've already fig
 
 #### Basic Nix Tools
  - [nh](https://github.com/viperML/nh) (yet another nix helper), simplifies and pretties up nix and home manager's built in commands. Includes a search command for finding nix packages, and a tool to run the nix garbage collector at regular intervals.
+ - [nix-inspect](https://github.com/bluskript/nix-inspect) as close to a debugger as I've found for nix, let's you inspect the results of a derivation.
  - [deadnix](https://github.com/astro/deadnix) cli tool for scanning your flake for inputs that aren't used.
  - [just](https://github.com/casey/just) a command runner. not nix related, but generally very helpful for simplifying the things you find yourself doing over and over.
 ---
