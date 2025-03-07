@@ -1,6 +1,6 @@
 # nh (yet another nix helper) https://github.com/viperML/nh
 
-{ config, ... }: {
+{ ... }: {
 
   config = {
 

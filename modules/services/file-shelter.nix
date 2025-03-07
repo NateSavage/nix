@@ -1,11 +1,11 @@
 
 
-{ config, pkgs, ... }: {
+{ pkgs, ... }: {
 
   systemd.user.services.file-shelter = {
     enable = true;
     path = [ pkgs.file-shelter ];
-    
+
     after = [ "network.target" ];
     wantedBy = [ "default.target" ];
     description = "A 'one-click' file sharing web application";
@@ -14,5 +14,5 @@
         ExecStart = '${nix-shelter}/bin/;
     };
   };
-  
+
 }

@@ -1,4 +1,4 @@
-{nixpkgs, outputs, lib, config, ...}: let
+{ nixpkgs, outputs, lib, config, ... }: let
 
   hosts = lib.attrNames outputs.nixosConfigurations;
 

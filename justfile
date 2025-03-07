@@ -19,13 +19,14 @@ update host-name: _ensure-all-files-in-git
     nh os switch ./ -- update hostname {{host-name}} --extra-experimental-features nix-command --extra-experimental-features flakes
 
 build-home host-name: _ensure-all-files-in-git
-    home-manager --flake .#nate@{{host-name}} build
+    home-manager --flake .#nate@{{host-name}} build --extra-experimental-features nix-command --extra-experimental-features flakes
 
 switch-home host-name: _ensure-all-files-in-git
-    home-manager --flake .#nate@{{host-name}} switch -b backup
+    home-manager --flake .#nate@{{host-name}} switch -b backup --extra-experimental-features nix-command  --extra-experimental-features flakes --impure
 
 _ensure-all-files-in-git:
-	sudo git add -A
+  sudo git config --global --add safe.directory /etc/nixos
+  sudo git add -A
 
 # sync USER HOST:
 #  rsync -av --filter=':- .gitignore' -e "ssh -l {{USER}}" . {{USER}}@{{HOST}}:nix-config/

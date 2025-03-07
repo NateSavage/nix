@@ -2,7 +2,7 @@
 # depends on git
 # depends on experimental flakes features
 
-{ inputs, config, pkgs, outputs, ... }: {
+{ inputs, outputs, ... }: {
 
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -10,7 +10,6 @@
 
   config = {
   	nix = {
-      package = pkgs.nixFlakes;
       extraOptions = ''
         experimental-features = nix-command flakes
       '';
@@ -18,7 +17,11 @@
 
     programs.git.enable = true;
 
-    home-manager.extraSpecialArgs = { inherit inputs outputs; };
+    home-manager = {
+      backupFileExtension = "backup";
+      extraSpecialArgs = { inherit inputs outputs; };
+    };
+
   };
 
 }

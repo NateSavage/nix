@@ -9,6 +9,17 @@
     #  key = "";
     #};
 
+    # Large File Storage
     lfs.enable = true;
+    
+    extraConfig = {
+      init.defaultBranch = "main";
+      safe.directory = "/etc/nixos";
+    };
+    
+    # globally set .gitattributes
+    #attributes = {
+      
+    #};
   };
 }

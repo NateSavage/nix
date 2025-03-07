@@ -2,7 +2,7 @@
 
 {
   imports = [
-  	../feature-sets/cli-tools.nix
+  	../feature-sets/cli/tools.nix
   	
     ../apps/home-manager.nix
   ];

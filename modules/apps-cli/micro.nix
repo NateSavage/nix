@@ -1,5 +1,5 @@
 # Terminal based text editor with mouse support https://micro-editor.github.io/
 
-{ config, pkgs, ...}: {
+{ pkgs, ...}: {
    config.environment.systemPackages = [ pkgs.micro ];
 }
