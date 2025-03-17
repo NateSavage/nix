@@ -30,3 +30,14 @@ _ensure-all-files-in-git:
 
 # sync USER HOST:
 #  rsync -av --filter=':- .gitignore' -e "ssh -l {{USER}}" . {{USER}}@{{HOST}}:nix-config/
+
+
+
+
+# generates an age key for this host using the ssh key stored at /etc/ssh/ssh_host_ed25519_key.pub
+get-age-public-key:
+    nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
+
+# re-encrypts all secrets using the public keys in ./modules/security/.sops.yaml
+update-secrets:
+    nix-shell -p sops --run 'sops updatekeys ./modules/security/secrets.yaml ./modules/services/syncthing/secrets.yaml'

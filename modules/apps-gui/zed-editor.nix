@@ -1,9 +1,9 @@
 # Zed, a lovely text editor from the people who wrote Atom
 #
 #
-{ pkgs, ... } : {
+{ pkgs, pkgsUnstable, ... } : {
   environment.systemPackages = [
-    pkgs.zed-editor
+    pkgsUnstable.zed-editor
     pkgs.nixd # nix language server
   ];
 }

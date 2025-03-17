@@ -2,26 +2,29 @@
 #
 #
 
-{ pkgs, ... } : {
+{ pkgs, pkgsUnstable, ... } : {
 
   imports = [
+    ../apps-cli/app-image-run.nix
+    ../services/flatpak.nix
+
     ../apps-gui/zed-editor.nix
+    ../apps-gui/local-send.nix
+
+    ../apps-gui/godot-4-mono.nix
   ];
 
   programs.firefox.enable = true;
 
   environment.systemPackages = [
-    pkgs.sublime-merge
+    pkgs.mission-center
+    pkgs.fsearch # replacement for everything by voidtools on windows
+
+    pkgs.onlyoffice-desktopeditors
+    pkgs.github-desktop
+    pkgs.proton-pass
+    pkgs.obsidian
+    pkgs.blender
+   # pkgsUnstable.jetbrains.rider
   ];
-
-  # Allows Cosmic's built in app store to get software from flathub
-  services.flatpak.enable = true;
-  systemd.services.flatpak-repo = {
-    wantedBy = [ "multi-user.target" ];
-    path = [ pkgs.flatpak ];
-    script = ''
-      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    '';
-  };
-
 }

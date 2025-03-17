@@ -6,12 +6,11 @@
     hardware.url = "github:nixos/nixos-hardware";
     systems.url = "github:nix-systems/default-linux";
     nixpkgs.follows = "nixos-cosmic/nixpkgs";
-    #nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     # Home Manager
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixos-cosmic/nixpkgs";
     home-manager-unstable.url = "github:nix-community/home-manager";
     home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
@@ -34,8 +33,10 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
+    nixpkgs-stable,
     home-manager,
     home-manager-unstable,
+    sops-nix,
     nixos-cosmic,
     nix-flatpak,
     systems,
@@ -54,15 +55,25 @@
           config.allowUnfree = true;
         }
     );
+    stablePkgsFor = lib.genAttrs (import systems) (
+      system:
+        import nixpkgs-stable {
+          inherit system;
+          config.allowUnfree = true;
+        }
+    );
     unstablePkgsFor = lib-unstable.genAttrs (import systems) (
       system:
         import nixpkgs-unstable {
           inherit system;
           config.allowUnfree = true;
+          config.permittedInsecurePackages = [
+            "dotnet-sdk-6.0.428"
+          ];
         }
     );
-    pkgs-unstable = unstablePkgsFor.x86_64-linux;
-
+    pkgsUnstable = unstablePkgsFor.x86_64-linux;
+    pkgsStable = stablePkgsFor.x86_64-linux;
   in {
 
     inherit lib;
@@ -87,6 +98,11 @@
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
 
+      # Minimal configuration for setting up new nixos machines
+      bootstrap = lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+      };
+
       # Windows Subsystem for Linux playground.
       whisp = lib.nixosSystem {
         modules = [./hosts/whisp/configuration.nix];
@@ -99,10 +115,11 @@
         specialArgs = {inherit inputs outputs;};
       };
 
-      ## Personal Server.
+      ## Laptop.
       snek = lib.nixosSystem {
         modules = [
           ./hosts/snek/configuration.nix
+          sops-nix.nixosModules.sops
           nixos-cosmic.nixosModules.default
           {
             nix.settings = {
@@ -111,7 +128,8 @@
             };
           }
         ];
-        specialArgs = { inherit inputs outputs; };
+
+        specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
       };
 
     };

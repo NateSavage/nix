@@ -3,8 +3,8 @@
 {
   imports = [
     ../../apps/firefox.nix
-    ../../apps/zed-editor.nix
+    #../../apps/zed-editor.nix
   ];
-  
-  
+
+
 }

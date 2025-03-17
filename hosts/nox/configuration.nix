@@ -1,4 +1,4 @@
-{ config, pkgs, ...}: {
+{ config, ...}: {
   imports = [
     ../always
     ./hardware-configuration.nix
@@ -9,7 +9,7 @@
     ../../users/nate
   ];
 
-  i18n.defaultLocale = "en_AU.UTF-8";  
+  i18n.defaultLocale = "en_AU.UTF-8";
 
   boot.loader.grub = {
     enable = true;
@@ -33,29 +33,29 @@
   };
 
   system.stateVersion = "24.05";
-  
-  
+
+
   ####### Experimenting
-  
+
   networking.firewall = {
     allowedTCPPorts = [ 80 443 2342 ];
   };
-  
+
     # grafana configuration
     services.grafana = {
       enable = true;
       settings.analytics.reporting_enabled = false;
       settings.server = {
         domain = "monitor.panopticom.online";
-        
+
         # listening address
         http_addr = "127.0.0.1";
         http_port = 2342;
       };
     };
-  
+
     # reverse proxy
-    
+
     services.haproxy = {
       enable = true;
       user = "haproxy";
@@ -66,19 +66,19 @@
     systemd.user.services.haproxy = {
       after = [ "prometheus.service" "grafana.service"];
     };
-  
-  
+
+
   services.prometheus = {
       enable = true;
       globalConfig.scrape_interval = "10s";
       port = 9001;
-      
+
       exporters.node = {
         enable = true;
         enabledCollectors = [ "systemd" ];
         port = 9002;
       };
-      
+
       scrapeConfigs = [{
           job_name = "scrape-systemd";
           static_configs = [{ targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ]; }];
@@ -88,7 +88,7 @@
         }
       ];
     };
-  
+
   # See https://search.nixos.org/options?channel=unstable&query=services.matrix-conduit.
     # and https://docs.conduit.rs/configuration.html
    # services.matrix-conduit = {
@@ -101,7 +101,7 @@
    #      port = 9444;
    #     address = "::1";
    #     database_backend = "rocksdb";
-        
+
         # See https://docs.conduit.rs/turn.html, and https://github.com/element-hq/synapse/blob/develop/docs/turn-howto.md for more details
         # turn_uris = [
         #  "turn:your.turn.url?transport=udp"
@@ -110,7 +110,7 @@
         # turn_secret = "your secret";
    #   };
    # };
-  
-  
+
+
   ######################
 }

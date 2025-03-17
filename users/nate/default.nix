@@ -1,26 +1,18 @@
 { config, ... } : let
   ifGroupsExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in {
-  users.mutableUsers = false;
+
   users.users.nate = {
+
     isNormalUser = true;
     #shell = nixpkgs.fish;
     hashedPassword="$y$j9T$u3miKRe0i9J4A0x4WRZxY/$nTZTaJlqQ9MWL/SGA5CJVAKFi0jhOHSriSVMswwkVm4";
     extraGroups = ifGroupsExist [
-      "audio"
-      "docker"
-      "git"
-      "i2c"
-      "libvirtd"
-      "lxd"
-      "mysql"
-      "network"
-      "plugdev"
-      "podman"
-      "video"
+      "synced"
       "wheel"
-      "wireshark"
     ];
+
+
 
     #openssh.authorizedKeys.keys = lib.splitString "\n" (builtins.readFile ../../../../home/nate/ssh.pub);
     #hashedPasswordFile = config.sops.secrets.nate-password.path;
@@ -28,6 +20,8 @@ in {
     #  nixpkgs.home-manager
     #];
   };
+
+  services.openssh.settings.AllowUsers = [ "nate" ];
 
   #sops.secrets.nate-password = {
   #  sopsFile = ../../secrets.yaml;
@@ -41,7 +35,6 @@ in {
       #unstable-zed-editor
       #(inputs.home-manager-unstable + "modules/programs/zed-editor.nix")
     ];
-    home.stateVersion = "24.05";
   };
   #security.pam.services = {
   #  swaylock = {};

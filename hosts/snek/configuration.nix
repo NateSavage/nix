@@ -8,7 +8,16 @@
     ../../modules/security/nix-hardening.nix
 
     ../../users/nate
+
+    ../../modules/services/syncthing/client.nix
   ];
+
+  system.stateVersion = "25.05";
+
+  networking = {
+    hostName = "snek";
+    #hostId = "b344a648";
+  };
 
   boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ];
 
