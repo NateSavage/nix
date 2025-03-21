@@ -1,9 +1,6 @@
 { config, ...}: {
   imports = [
-    ../always
-    ./hardware-configuration.nix
-
-    ../../modules/always
+    ../-features/always
     ../../modules/feature-sets/nix-hardening.nix
     #../../modules/apps/file-shelter.nix
     ../../users/nate

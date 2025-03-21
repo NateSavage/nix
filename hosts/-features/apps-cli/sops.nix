@@ -1,5 +1,6 @@
 # Mozilla Secret OPerationS
 # requires input at the top of the flake
+# Do not run sops as root! It will look for keys in the wrong location and won't be able to decrypt anything
 #
 { inputs, pkgs, config, ... }: let
   isEd25519 = k: k.type == "ed25519";
@@ -22,6 +23,8 @@ in {
       keyFile = "/var/lib/sops-nix/key.txt";
       generateKey = true;
     };
+
+
 
     secrets = {
 

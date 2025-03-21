@@ -1,5 +1,5 @@
 {
-  description = "Nate's personal NixOS mono-flake.";
+  description = "Nate's personal NixOS cluster flake.";
 
   inputs = {
     # Nix ecosystem
@@ -105,20 +105,20 @@
 
       # Windows Subsystem for Linux playground.
       whisp = lib.nixosSystem {
-        modules = [./hosts/whisp/configuration.nix];
+        modules = [./hosts/whisp];
         specialArgs = {inherit inputs outputs;};
       };
 
       ## Personal Server.
       nox = lib.nixosSystem {
-        modules = [./hosts/nox/configuration.nix];
+        modules = [./hosts/nox];
         specialArgs = {inherit inputs outputs;};
       };
 
       ## Laptop.
       snek = lib.nixosSystem {
         modules = [
-          ./hosts/snek/configuration.nix
+          ./hosts/snek
           sops-nix.nixosModules.sops
           nixos-cosmic.nixosModules.default
           {

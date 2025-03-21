@@ -3,7 +3,9 @@
 {
   imports = [
   	../feature-sets/cli/tools.nix
-  	
+
     ../apps/home-manager.nix
+
+    ../apps/ssh.nix
   ];
 }

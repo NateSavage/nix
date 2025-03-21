@@ -2,12 +2,12 @@
 { pkgs, ... } : {
 	imports = [
 	  ../apps-cli/superfile.nix
-	  ../apps-cli/micro.nix
 	  ../apps-cli/ion-shell.nix
 	  ../apps-cli/just.nix
 	];
 
- environment.systemPackages = [
+  environment.systemPackages = [
+    pkgs.micro
     pkgs.age
     pkgs.ssh-to-age
   ];

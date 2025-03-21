@@ -19,6 +19,7 @@
   environment.systemPackages = [
     pkgs.mission-center
     pkgs.fsearch # replacement for everything by voidtools on windows
+    pkgs.bleachbit
 
     pkgs.onlyoffice-desktopeditors
     pkgs.github-desktop

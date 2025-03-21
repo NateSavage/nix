@@ -1,16 +1,19 @@
-## ❄️ Nate's NixOS Mono-Flake ❄️
+## ❄️ Nate's NixOS Cluster Flake ❄️
 
-This is me exploring how to work with Nix and shows how my personal machines are currently running. I am not an expert, this is just what makes sense to me after hours of reading and making the compiler angry. Nix is a package manager, functional programming language, and build system that makes declarative system configurations possible.
+This is me exploring how to work with Nix and shows how my personal machines are currently running. I am not an expert, this is just what makes sense to me after hours of reading and making Nix angry.
 
-You can use Nix as a package manager on Mac or Linux to create clean build environments without dirtying your system, or declaritivly managing your home directory and config files.
+Nix is a package manager, functional programming language, and build system that makes declarative system configurations possible.
+Unfortunately Nix is currently
+
+You can use Nix (the package manager) on Mac or Linux to create clean build environments without dirtying your system, or declaritivly managing your home directory and config files.
 
 ### Structure Explanation
 <pre>
-📦nix-configuration
+📦nix - root directory of our flake
  ┣ 📂home - things to be setup in each user's home directory, how they like their environment configured
  ┃ ┣ 📂alice
- ┃ ┃ ┣ 📂always - things alice wants across all hosts
- ┃ ┃ ┣ 📂app-configs - how alice likes each program configured
+ ┃ ┃ ┣ 📂always - things alice wants in her home directory across all hosts
+ ┃ ┃ ┣ 📂apps - how alice likes each program configured
  ┃ ┃ ┣ 📂at - defines alices environment on each host using everything in her folder
  ┃ ┃ ┃ ┣ ❄️desktop.nix
  ┃ ┃ ┃ ┣ ❄️work-laptop.nix
@@ -18,27 +21,31 @@ You can use Nix as a package manager on Mac or Linux to create clean build envir
  ┃ ┃ ┗📂 feature-sets - things alice commonly bundles together
  ┃ ┗ 📂bob
  ┣ 📂hosts - system-wide configuration for each machine
+ ┃ ┣ 📂-features - anything that we may apply systemwide to a host
+ ┃ ┃ ┣ 📂always - features we want on all host machines
+ ┃ ┃ ┣ 📂apps-cli - programs that one would interact with through the command line interface
+ ┃ ┃ ┣ 📂apps-gui - programs that have a graphical user interface
+ ┃ ┃ ┣ 📂desktops - components that configure desktop environments
+ ┃ ┃ ┣ 📂security - components that harden the system
+ ┃ ┃ ┗ 📂services - pre-configured systemd units that will start when the host starts
  ┃ ┣ 📂desktop
- ┃ ┃ ┣ ❄️configuration.nix - users, modules, services, this host should have
+ ┃ ┃ ┣ ❄️default.nix - defines the system configuration for the host
  ┃ ┃ ┗ ❄️hardware-configuration.nix - things that may need to change if the host is moved to a different physical device
  ┃ ┣ 📂work-laptop
  ┃ ┗ 📂home-server
- ┣ 📂modules - any self contained thing, or bundle of things we install on a system
- ┃ ┣ 📂always - modules that all host machines need
- ┃ ┣ 📂apps - any individual program the user or system may invoke
- ┃ ┣ 📂feature-sets - bundles of apps/services that commonly go together
- ┃ ┗ 📂services - modules that will run automatically or in the background
+ ┣ 📂lib - library of nix language functions for use anywhere in the flake
+ ┣ 📂modules - templates that describe what a nix object should look like
  ┣ 📂users - logical understanding a host machine needs when configuring a user, like their name and what groups they belong to.
+ ┃ ┣ 📂admin - a generic admin account so that every day user accounts do not need wheel privlidges
  ┃ ┣ 📂alice
  ┃ ┗ 📂bob
  ┣ ❄️flake.nix - ties everything in the repository together, informs nix what to include for each host and user
- ┣ ❄️flake.lock - holds specific versions for other flakes this flake relies on
+ ┣ ❄️flake.lock - holds specific versions for other the dependencies of this flake
  ┣ 📜justfile - recipies for shortening long winded commands I've typed too many times
- ┗ ❄️shell.nix - shell environments that can be invoked with one command for various tasks 
+ ┗ ❄️shell.nix - shell environments that can be invoked with one command for various tasks
 
 Things I've seen other nix users include that I'm not using.
 ┣ 📂overlays - changes overriding default settings from up stream packages
-              ^ I don't use this because I consider all of my modules to potentially be overlays
 </pre>
 
 ### Structure Notes
@@ -86,4 +93,3 @@ get comfortable with the language and basics of configuring nix before using the
 #### System Fine Tuning
 - [Nix: Reasonable Default Configs](https://jackson.dev/post/nix-reasonable-defaults/) by Patrick Jackson
 ---
-

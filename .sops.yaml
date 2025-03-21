@@ -9,7 +9,12 @@ keys:
 # it then checks that file name to find the first matching creation rule for how to encrypt it.
 # creation rules are evaluated sequentially, the first match wins.
 creation_rules:
-  - path_regex: secrets/[^/]+\.(yaml|json|env|ini|sops)$
+  - path_regex: nate/secrets+\.(yaml|json|env|ini|sops)$
+    key_groups:
+      - age:
+          - *sops-master
+          - *snek
+  - path_regex: secrets+\.(yaml|json|env|ini|sops)$
     key_groups:
       - age:
           - *sops-master

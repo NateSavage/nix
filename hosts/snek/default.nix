@@ -1,16 +1,35 @@
-{ pkgs, ...}: {
+{ pkgs, ... }: {
   imports = [
     ./hardware-configuration.nix
+    ../-features/always
+    ../-features/desktops/cosmic.nix
 
-    ../../modules/always
-    ../../modules/desktops/cosmic.nix
-
-    ../../modules/security/nix-hardening.nix
+    ../-features/security/nix-hardening.nix
 
     ../../users/nate
+    ../../users/admin
 
-    ../../modules/services/syncthing/client.nix
+    ../-features/services/syncthing/client.nix
   ];
+
+  yubikey.enable = true;
+
+  environment.systemPackages = [
+
+    pkgs.unityhub
+
+  ];
+
+  hardware.nvidia = {
+    modesetting.enable = true; # required to be able to change any nvidia hardware settings
+    nvidiaSettings = true;
+  };
+
+  # silly fix for unity hub sign in issue on 3/20/2025
+  xdg.portal = {
+    enable = true;
+    xdgOpenUsePortal = true;
+  };
 
   system.stateVersion = "25.05";
 
