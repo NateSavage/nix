@@ -36,13 +36,13 @@ let
         exit 0
       fi
 
-      echo "Creating links to ${homeDirectory}/id_$key_name"
-      ln -sf "${homeDirectory}/.ssh/id_$key_name" ${homeDirectory}/.ssh/id_yubikey
-      ln -sf "${homeDirectory}/.ssh/id_$key_name.pub" ${homeDirectory}/.ssh/id_yubikey.pub
+      echo "Creating links to ${homeDirectory}/$key_name-ed25519-sk"
+      ln -sf "${homeDirectory}/.ssh/$key_name-ed25519-sk" ${homeDirectory}/.ssh/id_yubikey
+      ln -sf "${homeDirectory}/.ssh/$key_name-ed25519-sk.pub" ${homeDirectory}/.ssh/id_yubikey.pub
     '';
   };
 
-  # will be executed when a yubikey is unplugged
+  # will be executed when a yubikey is unpluggedi
   yubikey-down = pkgs.writeShellApplication {
       name = "yubikey-down";
       text = ''

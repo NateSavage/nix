@@ -25,7 +25,7 @@ in {
   };
 
   # if the host system has our yubikey module enabled, add our keys
-  yubikey = lib.mkIf config.yubikey.enable {
+  yubikey = { # lib.mkIf config.yubikey.enable
     identifiers = {
       a = 31114443;
       c = 27429156;
