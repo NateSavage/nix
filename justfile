@@ -24,20 +24,24 @@ build-home host-name: _ensure-all-files-in-git
 switch-home host-name: _ensure-all-files-in-git
     home-manager --flake .#nate@{{host-name}} switch -b backup --extra-experimental-features nix-command  --extra-experimental-features flakes --impure
 
-_ensure-all-files-in-git:
-  sudo git config --global --add safe.directory /etc/nixos
-  sudo git add -A
-
-# sync USER HOST:
-#  rsync -av --filter=':- .gitignore' -e "ssh -l {{USER}}" . {{USER}}@{{HOST}}:nix-config/
-
-
-
-
+#
+# secrets and cryptography
+#
 # generates an age key for this host using the ssh key stored at /etc/ssh/ssh_host_ed25519_key.pub
 get-age-public-key:
     nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
 
 # re-encrypts all secrets using the public keys in ./modules/security/.sops.yaml
 update-secrets:
-    nix-shell -p sops --run 'sops updatekeys ./modules/security/secrets.yaml ./modules/services/syncthing/secrets.yaml'
+    nix-shell -p sops --run 'sops updatekeys ./hosts/-features/security/secrets.yaml ./hosts/-features/services/syncthing/secrets.yaml ./users/nate/secrets.yaml'
+
+
+#
+# private methods
+#
+_ensure-all-files-in-git:
+  sudo git config --global --add safe.directory /etc/nixos
+  sudo git add -A
+
+# sync USER HOST:
+#  rsync -av --filter=':- .gitignore' -e "ssh -l {{USER}}" . {{USER}}@{{HOST}}:nix-config/

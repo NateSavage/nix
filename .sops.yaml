@@ -4,18 +4,28 @@ keys:
     - &sops-master age1y8nuphjav485gh27rgswe5dqvq3mpg8zk39g5hlhfc8cj44nxsdss2nchv
   - &hosts: # nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
     - &snek age1q5mmdvv7p7mzt6rhn0l55lhfkscq3khqkjagvfy7rdd7mf2neplqxu5jlv
+    - &nox age1jwyqvzm4zzjsektv985netw3grmz890ye2eg9t3k9plza8kk35sq3gnk27
 
 # when you run sops on a file, it searches upwards for a .sops.yaml file,
 # it then checks that file name to find the first matching creation rule for how to encrypt it.
 # creation rules are evaluated sequentially, the first match wins.
 creation_rules:
-  - path_regex: nate/secrets+\.(yaml|json|env|ini|sops)$
+  # snek only secrets
+  - path_regex: snek/secrets+\.(yaml|json|env|ini|sops)$
     key_groups:
       - age:
           - *sops-master
           - *snek
+  # nox only secrets
+  - path_regex: nox/secrets+\.(yaml|json|env|ini|sops)$
+    key_groups:
+      - age:
+          - *sops-master
+          - *nox
+  # secrets with no other pre-defined retrictions are accessible by the entire cluster
   - path_regex: secrets+\.(yaml|json|env|ini|sops)$
     key_groups:
       - age:
           - *sops-master
           - *snek
+          - *nox
