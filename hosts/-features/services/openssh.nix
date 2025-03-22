@@ -1,3 +1,5 @@
+# include this module in a host to require security key 2 factor on remotely connected users for actions like sudo
+
 { nixpkgs, outputs, lib, config, ... }: let
 
   hosts = lib.attrNames outputs.nixosConfigurations;
@@ -6,13 +8,12 @@
   # just persisting the keys won't work, we must point at /persist
   hasOptinPersistence = config.environment.persistence ? "/persist";
 in {
+
+  # see security folder for hardening
   services.openssh = {
     enable = true;
     settings = {
       # Harden
-      PasswordAuthentication = false;
-      PermitRootLogin = "no";
-
       # Automatically remove stale sockets
       StreamLocalBindUnlink = "yes";
       # Allow forwarding ports to everywhere
@@ -30,19 +31,19 @@ in {
     ];
   };
 
-  programs.ssh = {
+  #programs.ssh = {
     # Each hosts public key
-    knownHosts = lib.genAttrs hosts (hostname: {
-      publicKeyFile = ../../${hostname}/ssh_host_ed25519_key.pub;
-      extraHostNames =
-        [
-          "${hostname}.m7.rs"
-        ]
-        ++
-        # Alias for localhost if it's the same host
-        (lib.optional (hostname == config.networking.hostName) "localhost")
-    });
-  };
+  #  knownHosts = lib.genAttrs hosts (hostname: {
+  #    publicKeyFile = ../../${hostname}/ssh_host_ed25519_key.pub;
+  #    extraHostNames =
+  #      [
+  #        "${hostname}.m7.rs"
+  #      ]
+  #      ++
+  #      # Alias for localhost if it's the same host
+  #      (lib.optional (hostname == config.networking.hostName) "localhost")
+  #  });
+  #};
 
    # yubikey login / sudo
   # NOTE: We use rssh because sshAgentAuth is old and doesn't support yubikey:

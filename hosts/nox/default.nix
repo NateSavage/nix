@@ -1,7 +1,9 @@
 { config, ...}: {
   imports = [
     ../-features/always
-    ../../modules/feature-sets/nix-hardening.nix
+    ../-features/feature-sets/nix-hardening.nix
+
+    ../-features/services/openssh.nix
     #../../modules/apps/file-shelter.nix
     ../../users/nate
   ];
