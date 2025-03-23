@@ -6,5 +6,6 @@
 
     ../apps/home-manager.nix
     ../apps/sops.nix
+    ../apps/ssh.nix
   ];
 }
