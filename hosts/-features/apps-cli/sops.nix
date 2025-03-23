@@ -24,8 +24,6 @@ in {
       generateKey = true;
     };
 
-
-
     secrets = {
 
       org-url = {

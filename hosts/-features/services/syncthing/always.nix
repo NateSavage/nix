@@ -4,7 +4,7 @@ in {
   # syncthing uses 8384 for remote access to GUI
   # 22000 TCP and UDP for sync traffic
   # 21027 UDP for discovery
-  networking.firewall.allowedTCPPorts = [ 22000 ]; # // 8384
+  networking.firewall.allowedTCPPorts = [ 22000 8384]; # // 8384
   networking.firewall.allowedUDPPorts = [ 22000 21027 ];
 
   users.groups.synced = {};
@@ -21,6 +21,10 @@ in {
 
       overrideDevices = true;
       overrideFolders = true;
+
+      settings.options = {
+        limitBandwidthInLan = false;
+      };
 
       # required to prevent the id for syncthing from changing over time
       #key = ../../../hosts/${config.networking.hostName}/syncthing/key.pem;

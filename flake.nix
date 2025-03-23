@@ -111,8 +111,11 @@
 
       ## Personal Server.
       nox = lib.nixosSystem {
-        modules = [./hosts/nox];
-        specialArgs = {inherit inputs outputs;};
+        modules = [
+          ./hosts/nox
+          sops-nix.nixosModules.sops
+        ];
+        specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
       };
 
       ## Laptop.

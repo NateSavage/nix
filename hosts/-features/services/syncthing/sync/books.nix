@@ -1,6 +1,6 @@
 {
   folders."/synced/books" = {
-    id = "books";
+    id = "nate-books";
     type = "sendreceive";
     devices = [ "archive-server" ];
     #versioning =

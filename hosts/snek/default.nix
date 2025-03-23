@@ -10,6 +10,7 @@
     ../../users/admin
 
     ../-features/services/syncthing/client.nix
+    ../-features/services/syncthing/receive/books.nix
   ];
 
   yubikey.enable = true;

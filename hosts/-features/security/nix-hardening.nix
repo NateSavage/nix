@@ -31,7 +31,7 @@
   services.openssh = {
     # todo: allow only known hosts in the cluster to ssh
       settings = {
-        PasswordAuthentication = true;
+        PasswordAuthentication = false;
         PermitRootLogin = "no"; # "yes", "without-password", "prohibit-password", "forced-commands-only", "no"
         UseDns = true;
         X11Forwarding = false;

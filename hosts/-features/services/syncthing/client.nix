@@ -14,6 +14,7 @@ in {
       "archive-server" = {
         id = secrets."syncthing/archive-server/id".path;
         name = "archive-server";
+        addresses = [ "dynamic" ];
       };
     };
 

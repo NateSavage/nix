@@ -1,9 +1,11 @@
 { config, ...}: {
   imports = [
+    ./hardware-configuration.nix
     ../-features/always
-    ../-features/feature-sets/nix-hardening.nix
+    ../-features/security/nix-hardening.nix
 
     ../-features/services/openssh.nix
+    ../-features/services/syncthing/archive.nix
     #../../modules/apps/file-shelter.nix
     ../../users/nate
   ];
