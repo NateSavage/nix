@@ -5,7 +5,7 @@ keys:
   - &hosts: # nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
     - &snek age1q5mmdvv7p7mzt6rhn0l55lhfkscq3khqkjagvfy7rdd7mf2neplqxu5jlv
     - &nox age1jwyqvzm4zzjsektv985netw3grmz890ye2eg9t3k9plza8kk35sq3gnk27
-    - &whisp age16ez8nm8mky9rsk38khkc7hj90c2pc8hgtfj4f3w2vh50p95y054qvj0z9c
+    - &whisp age1g5d8prqmjcdzfvfheesp5drka96t8zakmpjjefepw57tr9fylqsshe6606
       # when you run sops on a file, it searches upwards for a .sops.yaml file,
       # it then checks that file name to find the first matching creation rule for how to encrypt it.
       # creation rules are evaluated sequentially, the first match wins.
