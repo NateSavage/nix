@@ -1,6 +1,6 @@
 { config, ... }: let
     secrets = config.sops.secrets;
-    allClients = [ "snek" "beep-box" ]; #"beepbox" "mr-lemon" ];
+    nateClients = [ "snek" "beep-box" ]; #"beepbox" "mr-lemon" ];
 in {
   imports = [
     ./always.nix
@@ -26,20 +26,24 @@ in {
      # };
     };
     folders = {
-      "/synced/archive" = {
-        id = "nate-archive";
-        type = "sendreceive";
-        devices = allClients;
+      # these are files we want sent to the archive and stored long term
+      # it's an unsorted bucket that I'll figure out how I want to sort later
+      "archive" = {
+        id = "nate-archive-to-sort";
+        path = "/sync/archive-to-sort";
+        type = "receiveonly";
+        devices = nateClients;
         #versioning =
       };
       #"/synced/3d-archive" = {
 
       #"/synced/projects" = {
 
-      "/synced/books" = {
+      "books" = {
         id = "nate-books";
+        path = "/sync/nate/books";
         type = "sendreceive";
-        devices = allClients;
+        devices = nateClients;
         versioning = {
           type = "trashcan";
           params.cleanoutDays = "180";
@@ -47,16 +51,22 @@ in {
       };
       #"/synced/3d" = {
       #"/synced/photos" = {
-      "/synced/music" = {
+      "music" = {
         id = "nate-music";
+        path = "/sync/nate/music";
         type = "receiveonly";
-        devices = allClients;
+        devices = nateClients;
       };
       #"/synced/videos" = {
 
       #"/synced/financial" = {
       #"/synced/medical" = {
-      #"/synced/mind" = {
+      "mind" = {
+        id = "nate-mind";
+        path = "/sync/nate/mind";
+        type = "sendreceive";
+        devices = nateClients;
+      };
     };
   };
 }
