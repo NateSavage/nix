@@ -31,7 +31,7 @@ switch-home host-name: _ensure-all-files-in-git
 get-age-public-key:
     nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
 
-# re-encrypts all secrets using the public keys in ./modules/security/.sops.yaml
+# re-encrypts all secrets using the cluster's approved keys in the .sops.yaml file
 update-secrets:
     nix-shell -p sops --run 'sops updatekeys ./hosts/-features/security/secrets.yaml ./hosts/-features/services/syncthing/secrets.yaml ./users/nate/secrets.yaml'
 

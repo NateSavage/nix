@@ -5,10 +5,11 @@ keys:
   - &hosts: # nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
     - &snek age1q5mmdvv7p7mzt6rhn0l55lhfkscq3khqkjagvfy7rdd7mf2neplqxu5jlv
     - &nox age1jwyqvzm4zzjsektv985netw3grmz890ye2eg9t3k9plza8kk35sq3gnk27
+    - &whisp age1fnkykrh4rmh65dk0z44xerc6lt8lwtyzdgdvmau894y0jlum4fzqyujnrj
+      # when you run sops on a file, it searches upwards for a .sops.yaml file,
+      # it then checks that file name to find the first matching creation rule for how to encrypt it.
+      # creation rules are evaluated sequentially, the first match wins.
 
-# when you run sops on a file, it searches upwards for a .sops.yaml file,
-# it then checks that file name to find the first matching creation rule for how to encrypt it.
-# creation rules are evaluated sequentially, the first match wins.
 creation_rules:
   # snek only secrets
   - path_regex: snek/secrets+\.(yaml|json|env|ini|sops)$
@@ -29,3 +30,4 @@ creation_rules:
           - *sops-master
           - *snek
           - *nox
+          - *whisp
