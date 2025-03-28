@@ -24,6 +24,7 @@ in {
         user = "git";
         identityFile = [
           "~/.ssh/id_yubikey" # This is an auto symlink to whatever yubikey is plugged in. See hosts/common/optional/yubikey
+          "~/.ssh/id_ed25519" # fallback key
         ];
       };
     };

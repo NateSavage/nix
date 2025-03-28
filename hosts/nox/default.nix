@@ -6,6 +6,7 @@
 
     ../-features/services/openssh.nix
     ../-features/services/syncthing/archive.nix
+    ../-features/services/forgejo.nix
     #../../modules/apps/file-shelter.nix
     ../../users/nate
   ];
