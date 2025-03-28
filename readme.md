@@ -3,9 +3,8 @@
 This is me exploring how to work with Nix and shows how my personal machines are currently running. I am not an expert, this is just what makes sense to me after hours of reading and making Nix angry.
 
 Nix is a package manager, functional programming language, and build system that makes declarative system configurations possible.
-Unfortunately Nix is currently
 
-You can use Nix (the package manager) on Mac or Linux to create clean build environments without dirtying your system, or declaritivly managing your home directory and config files.
+You can use Nix (the package manager) on Mac or Linux to create clean build environments without dirtying your system, or declaratively managing your home directory and config files.
 
 ### Structure Explanation
 <pre>
