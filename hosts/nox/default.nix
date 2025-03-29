@@ -13,14 +13,14 @@
 
   i18n.defaultLocale = "en_AU.UTF-8";
 
-  boot.loader.grub = {
-    enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    mirroredBoots = [
-      { devices = [ "nodev"]; path = "/boot"; }
-    ];
-  };
+  #boot.loader.grub = {
+  #  enable = true;
+  #  zfsSupport = true;
+  #  efiSupport = true;
+  #  mirroredBoots = [
+  #    { devices = [ "nodev"]; path = "/boot"; }
+  #  ];
+  #};
 
   #ZFS
   boot.loader.efi.canTouchEfiVariables = true;
