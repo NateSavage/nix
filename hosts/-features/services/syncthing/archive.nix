@@ -1,11 +1,11 @@
 { config, ... }: let
     secrets = config.sops.secrets;
-    nateClients = [ "snek" "beep-box" ]; #"beepbox" "mr-lemon" ];
+    nateClients = [ "snek" "beep-box" "foldy" ]; # "mr-lemon" ];
 in {
   imports = [
     ./always.nix
   ];
-
+  
   services.syncthing.guiAddress = "0.0.0.0:8384";
   services.syncthing.settings = {
 
@@ -18,6 +18,11 @@ in {
       "beep-box" = {
         id = secrets."syncthing/beep-box/id".path;
         name = "beep-box";
+        addresses = [ "dynamic" ];
+      };
+      "foldy" = {
+        id = secrets."syncthing/foldy/id".path;
+        name = "foldy";
         addresses = [ "dynamic" ];
       };
      # "mr-lemon" = {
@@ -66,6 +71,10 @@ in {
         path = "/sync/nate/mind";
         type = "sendreceive";
         devices = nateClients;
+        versioning = {                                                                    
+          type = "trashcan";                                                              
+          params.cleanoutDays = "180";                                                   
+        };
       };
     };
   };

@@ -7,7 +7,7 @@ in {
   networking.firewall.allowedTCPPorts = [ 22000 8384]; # // 8384
   networking.firewall.allowedUDPPorts = [ 22000 21027 ];
 
-  users.groups.synced = {};
+  users.groups.sync = {};
   services = {
     syncthing = {
       enable = true;
@@ -15,12 +15,12 @@ in {
       systemService = true;
 
       user = "syncthing";
-      group = "synced";
-      dataDir = "/synced/";
-      configDir = "/synced/.config/";
+      group = "sync";
+      dataDir = "/sync/";
+      configDir = "/sync/.config/";
 
-      overrideDevices = true;
-      overrideFolders = true;
+      #overrideDevices = true;
+      #overrideFolders = true;
 
       settings.options = {
         limitBandwidthInLan = false;
@@ -47,6 +47,7 @@ in {
     "syncthing/snek/id" = {sopsFile = ./secrets.yaml;};
     "syncthing/mr-lemon/id" = {sopsFile = ./secrets.yaml;};
     "syncthing/beep-box/id" = {sopsFile = ./secrets.yaml;};
+    "syncthing/foldy/id" = {sopsFile = ./secrets.yaml;};
   };
 
 }
