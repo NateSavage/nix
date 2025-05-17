@@ -5,6 +5,7 @@
   users.users.beak = {
     isNormalUser = true;
     extraGroups = [
+      "home"
       "wheel"
       "video"
       "audio"

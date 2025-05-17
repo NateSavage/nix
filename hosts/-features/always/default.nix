@@ -10,4 +10,6 @@
     ./nix-utils.nix
 	  ./linux-utils.nix
   ];
+  
+   users.groups.home = {};
 }

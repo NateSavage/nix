@@ -43,9 +43,12 @@
     ...
   } @inputs: let
     inherit (self) outputs;
-    # lib is a nix convention for where to put helper functions
+    
+    # combine nix pkgs, home manager, and our flake's library into one attribute set.
     lib = nixpkgs.lib // home-manager.lib;
     lib-unstable = nixpkgs-unstable.lib // home-manager-unstable.lib;
+    
+    lib-nate = (import ./lib).default { lib = nixpkgs.lib; };
 
     forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
     pkgsFor = lib.genAttrs (import systems) (
@@ -72,11 +75,14 @@
           ];
         }
     );
+    
+    
     pkgsUnstable = unstablePkgsFor.x86_64-linux;
     pkgsStable = stablePkgsFor.x86_64-linux;
   in {
 
     inherit lib;
+    
     # locations of things in the flake
     osAppsPath = ./modules/apps;
     osServicesPath = ./modules/services;
@@ -85,7 +91,7 @@
     hostsPath = ./hosts;
 
 
-
+    modules = lib-nate.importModulesRecursive ./modules;
     #nixosModules = import ./modules/nixos;
     #homeManagerModules = import ./modules/home-manager;
     #overlays = import ./overlays {inherit inputs outputs;};
@@ -114,6 +120,7 @@
         modules = [
           ./hosts/nox
           sops-nix.nixosModules.sops
+          ./hosts/-features/services/the-forest-server.nix
         ];
         specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
       };

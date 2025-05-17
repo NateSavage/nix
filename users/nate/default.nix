@@ -13,6 +13,11 @@ in {
     extraGroups = ifGroupsExist [
       "synced"
       "wheel"
+      "anyone"
+      "home"
+      "panopticom"
+      "eromancer"
+      "future-way-designs"
     ];
 
     # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos
