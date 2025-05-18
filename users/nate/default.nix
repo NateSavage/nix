@@ -11,13 +11,15 @@ in {
 
     hashedPassword="$y$j9T$u3miKRe0i9J4A0x4WRZxY/$nTZTaJlqQ9MWL/SGA5CJVAKFi0jhOHSriSVMswwkVm4";
     extraGroups = ifGroupsExist [
-      "synced"
-      "wheel"
-      "anyone"
       "home"
+      "wheel"
+      
+      "synced"
       "panopticom"
       "eromancer"
       "future-way-designs"
+      
+      "anyone"
     ];
 
     # These get placed into /etc/ssh/authorized_keys.d/<name> on nixos

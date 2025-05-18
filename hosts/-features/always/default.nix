@@ -11,5 +11,10 @@
 	  ./linux-utils.nix
   ];
   
-   users.groups.home = {};
+  users.groups.home = {};
+  users.groups.anyone = {};
+  users.users.anyone = { 
+    isSystemUser = true; 
+    group = "anyone";
+  };
 }

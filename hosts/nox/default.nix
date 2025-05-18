@@ -9,6 +9,7 @@
     ../-features/services/forgejo.nix
     #../../modules/apps/file-shelter.nix
     ../../users/nate
+    ../../users/beak
   ];
 
   i18n.defaultLocale = "en_AU.UTF-8";
@@ -19,12 +20,6 @@
   users.groups.eromancer = {};
   users.groups.panopticom = {};
   users.groups.future-way-designs= {};
-  users.groups.anyone = {};
-  #users.groups."Domain Users"= {};
-  users.users.anyone = { 
-    isSystemUser = true; 
-    group = "anyone";
-  };
   
   services = {
   
@@ -58,7 +53,7 @@
         
           "dns proxy" = "no";
           # note: localhost is the ipv6 localhost ::1
-          "hosts allow" = "10.189.189.249 192.168.251. 127.0.0.1 localhost BeepBox OnePlus-Open foldy snek";
+          "hosts allow" = "192.168.251.47 10.189.189.249 192.168.251. 127.0.0.1 localhost BeepBox OnePlus-Open foldy snek";
           "hosts deny" = "0.0.0.0/0";
         
 
@@ -132,6 +127,25 @@
         };
         */
         ### File Permission Templates^
+        
+        
+        public = {
+          "path" = "/mnt/arc/public";
+          "available" = "yes";
+          "browseable" = "yes";
+          "writeable" = "yes";
+          "guest ok" = "yes";
+          "map to guest" = "Bad User";
+                
+          # file permissions
+          "force create mode"    = "0666";
+          "create mask"          = "0666";
+
+          "force directory mode" = "0777"; 
+          "directory mask"       = "0777";
+        
+          "force group" = "anyone";
+        };
       
 
       archive = {
@@ -140,10 +154,8 @@
         "browseable" = "yes";
         "writeable" = "yes";
         "guest ok" = "no";
-        #"guest only" = "yes";
         
         # file permissions
-
         # for files, owner must have read-write. group must have read-write. others must have nothing. no one may execute code on the server
         "force create mode"    = "0660"; # default: 0000 the minimum permissions for a file created in this share
         "create mask"          = "0660"; # default: 0744 any bit not set in this mask will be removed from the permissions for newly created files
@@ -151,16 +163,48 @@
         "force directory mode" = "0770"; # default: 0000 the minimum permissions for a directory created in this share
         "directory mask"       = "0770"; # default: 0755 any bit not set in this mask will be removed from the permissions for newly created directories
         
-        #"map to guest" = "Bad User"; # allows failed login attempts to connect as the guest user
-
         "force group" = "+home"; #if the user is in the home group, make it their primary group when interfacing through samba
       };
+      
+      stash = {
+        "path" = "/mnt/arc/stash";
+        "available" = "yes";
+        "browseable" = "no";
+        "writeable" = "yes";
+              
+        "guest ok" = "no";
+        "valid users" = "nate";
+              
+        # file permissions
+        "force create mode"    = "0600"; 
+        "create mask"          = "0600"; 
+              
+        "force directory mode" = "0700";
+        "directory mask"       = "0700";
+      };
+            
+      "beaky-backup" = {
+        "path" = "/mnt/arc/beaky-backup";
+        "browseable" = "yes";
+        "writeable" = "yes";
+        "guest ok" = "no";
+                    
+        # file permissions
+        # for files, owner must have read-write. group must have read-write. others must have nothing. no one may execute code on the server
+        "force create mode"    = "0660"; # default: 0000 the minimum permissions for a file created in this share
+        "create mask"          = "0660"; # default: 0744 any bit not set in this mask will be removed from the permissions for newly created files
+        # for directories, owner must have read-write-browse. group must have list directory contents, enter directory, and create/delete. others must hav nothing.
+        "force directory mode" = "0770"; # default: 0000 the minimum permissions for a directory created in this share
+        "directory mask"       = "0770"; # default: 0755 any bit not set in this mask will be removed from the permissions for newly created directories        
+                    
+        "force group" = "+home"; #if the user is in the panopticom group, make it their primary group when interfacing through samba
+       };
       
       
       panopticom = {
         "path" = "/mnt/arc/panopticom";
         #"valid users" = "nate";
-        "browseable" = "yes";
+        "browseable" = "no";
         "writeable" = "yes";
         "guest ok" = "no";
         
@@ -176,16 +220,16 @@
         "force group" = "+panopticom"; #if the user is in the panopticom group, make it their primary group when interfacing through samba
       };
       
-      "eromancer" = {
+      eromancer = {
         "path" = "/mnt/arc/eromancer";
-        "browseable" = "yes";
+        "browseable" = "no";
         "writeable" = "yes";
         "guest ok" = "no";
         "valid users" = "nate";
           
           # for files, owner must have read-write. group must have read-write. others must have nothing. no one may execute code on the server
-          "force create mode"    = "0640"; # default: 0000 the minimum permissions for a file created in this share
-          "create mask"          = "0640"; # default: 0744 any bit not set in this mask will be removed from the permissions for newly created files
+          "force create mode"    = "0660"; # default: 0000 the minimum permissions for a file created in this share
+          "create mask"          = "0660"; # default: 0744 any bit not set in this mask will be removed from the permissions for newly created files
           # for directories, owner must have read-write-browse. group must have list directory contents, enter directory, and create/delete. others must hav nothing.
           "force directory mode" = "0770"; # default: 0000 the minimum permissions for a directory created in this share
           "directory mask"       = "0770"; # default: 0755 any bit not set in this mask will be removed from the permissions for newly created directories
@@ -195,7 +239,7 @@
       
         "future-way-designs" = {
           "path" = "/mnt/arc/future-way-designs";
-          "browseable" = "yes";
+          "browseable" = "no";
           "writeable" = "yes";
           "guest ok" = "no";
           "valid users" = "nate";

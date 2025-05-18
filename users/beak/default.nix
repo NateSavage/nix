@@ -6,20 +6,12 @@
     isNormalUser = true;
     extraGroups = [
       "home"
-      "wheel"
-      "video"
-      "audio"
     ];
-    hashedPasswordFile = config.sops.secrets.beak-password.path;
+   # hashedPasswordFile = config.sops.secrets.beak-password.path;
   };
 
-  sops.secrets.beak-password = {
-    sopsFile = ../../secrets.yaml;
-    neededForUsers = true;
-  };
-
-  # Persist entire home
-  environment.persistence = {
-    "/persist".directories = ["/home/beak"];
-  };
+  #sops.secrets.beak-password = {
+  #  sopsFile = ../../secrets.yaml;
+  #  neededForUsers = true;
+  #};
 }
