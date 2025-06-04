@@ -142,6 +142,22 @@
         specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
       };
 
+      gamebox = lib.nixosSystem {
+        modules = [
+          ./hosts/gamebox
+          sops-nix.nixosModules.sops
+          nixos-cosmic.nixosModules.default
+          {
+            nix.settings = {
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+          }
+        ];
+
+        specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
+      };
+
     };
 
     # Standalone home-manager configuration entrypoint
