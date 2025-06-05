@@ -1,20 +1,49 @@
-{ pkgs, ... }: {
+{ config, ... } :  let
+  ifGroupsExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
+in {
+
   imports = [
     ./hardware-configuration.nix
     ../-features/always
-    ../-features/desktops/cosmic.nix
 
     ../-features/security/nix-hardening.nix
 
+    ../../users/nate
   ];
 
-  #hardware.nvidia = {
-  #  modesetting.enable = true; # required to be able to change any nvidia hardware settings
-  #  nvidiaSettings = true;
-  #};
+  jovian.steam.enable = true;
+  jovian.steam.autoStart = true;
+  jovian.steam.updater.splash = "jovian";
+  jovian.steam.desktopSession = "cosmic";
+  jovian.steam.user = "games";
+  jovian.hardware.has.amd.gpu = true;
 
+  programs.steam = {
+    enable = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
 
-  #system.stateVersion = "25.05";
+  users.users.games = {
+
+    isNormalUser = true;
+
+    extraGroups = ifGroupsExist [
+      "anyone"
+    ];
+  };
+
+  services.desktopManager.cosmic.enable = true;
+  #services.displayManager.cosmic-greeter.enable = true;
+  
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "games";
+
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
 
   networking = {
     hostName = "gamebox";
@@ -44,4 +73,5 @@
   #  device = "/swapfile";
   #  size = 16 * 1024; # 16GB
   #}];
+  system.stateVersion = "25.11";
 }

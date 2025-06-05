@@ -1,4 +1,4 @@
-{ } : {
+{
 
   imports = [
     ./always.nix
@@ -10,9 +10,6 @@
   # Enable the Cinnamon Desktop Environment.
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
-
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "nate";
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;

@@ -7,7 +7,7 @@
     systems.url = "github:nix-systems/default-linux";
     nixpkgs.follows = "nixos-cosmic/nixpkgs";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
     # Home Manager
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixos-cosmic/nixpkgs";
@@ -27,6 +27,9 @@
 	  nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     impermanence.url = "github:misterio77/impermanence";
     superfile.url = "github:yorukot/superfile";
+
+    # special host specific flakes
+    jovian-nix.url = "github:Jovian-Experiments/Jovian-NixOS";
   };
 
   outputs = {
@@ -38,16 +41,17 @@
     home-manager-unstable,
     sops-nix,
     nixos-cosmic,
+    jovian-nix,
     nix-flatpak,
     systems,
     ...
   } @inputs: let
     inherit (self) outputs;
-    
+
     # combine nix pkgs, home manager, and our flake's library into one attribute set.
     lib = nixpkgs.lib // home-manager.lib;
     lib-unstable = nixpkgs-unstable.lib // home-manager-unstable.lib;
-    
+
     lib-nate = (import ./lib).default { lib = nixpkgs.lib; };
 
     forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
@@ -75,14 +79,14 @@
           ];
         }
     );
-    
-    
+
+
     pkgsUnstable = unstablePkgsFor.x86_64-linux;
     pkgsStable = stablePkgsFor.x86_64-linux;
   in {
 
     inherit lib;
-    
+
     # locations of things in the flake
     osAppsPath = ./modules/apps;
     osServicesPath = ./modules/services;
@@ -145,6 +149,7 @@
       gamebox = lib.nixosSystem {
         modules = [
           ./hosts/gamebox
+          jovian-nix.nixosModules.default
           sops-nix.nixosModules.sops
           nixos-cosmic.nixosModules.default
           {
@@ -154,7 +159,6 @@
             };
           }
         ];
-
         specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
       };
 
