@@ -129,6 +129,23 @@
         specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
       };
 
+      ##
+      beepbox = lib.nixosSystem {
+        modules = [
+          ./hosts/beepbox
+          sops-nix.nixosModules.sops
+          #nixos-cosmic.nixosModules.default
+          {
+            nix.settings = {
+              substituters = [ "https://cosmic.cachix.org/" ];
+              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+            };
+          }
+        ];
+
+        specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
+      };
+
       ## Laptop.
       snek = lib.nixosSystem {
         modules = [
