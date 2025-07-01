@@ -1,10 +1,13 @@
 ## ❄️ Nate's NixOS Cluster Flake ❄️
-
-This is me exploring how to work with Nix and shows how my personal machines are currently running. I am not an expert, this is just what makes sense to me after hours of reading and making Nix angry.
+[![NixOS Stable 25.05](https://img.shields.io/badge/NixOS-25.05-blue.svg?style=flat-square&logo=NixOS&logoColor=white)](https://nixos.org)
 
 Nix is a package manager, functional programming language, and build system that makes declarative system configurations possible.
 
 You can use Nix (the package manager) on Mac or Linux to create clean build environments without dirtying your system, or declaratively managing your home directory and config files.
+
+> [!WARNING]
+> This is me exploring how to work with Nix, it shows how my personal machines are currently running.
+> I'm fairly young in my Nix journey, this flake is currently quite ugly and attempting to copy it verbatim would be a mistake.
 
 ### Structure Explanation
 <pre>
