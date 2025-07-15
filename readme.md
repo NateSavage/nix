@@ -66,7 +66,7 @@ I'm assuming that since you're looking at nix configurations, you've already fig
 - [Nix source code](https://github.com/NixOS/nixpkgs) can be more helpful than it's documentation once you know a little about the language
 - [Noogle](https://noogle.dev) search for nix functions
 - [search.nixos.org](https://search.nixos.org/packages) search for nix packages
-- [lazamar.co.uk](https://lazamar.co.uk) search the nix packages binary cache archive
+- [lazamar.co.uk/nix-versions/](https://lazamar.co.uk/nix-versions) search the nix packages binary cache archive
 ---
 
 #### Example configs
