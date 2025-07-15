@@ -14,6 +14,11 @@
 
   i18n.defaultLocale = "en_AU.UTF-8";
   
+  programs.git = {
+      enable = true;
+      lfs.enable = true;
+  };
+  
   
   # samba
   
@@ -21,7 +26,48 @@
   users.groups.panopticom = {};
   users.groups.future-way-designs= {};
   
-  services = {
+  sops.secrets = {
+      "panopticom/github-runner-token" = {
+        sopsFile = ./secrets.yaml;
+        #owner = "github-runner-panopticom";
+        path = "/secrets/panopticom-github-token";
+      };
+      
+      "eromancer/github-runner-token" = {
+            sopsFile = ./secrets.yaml;
+            #owner = "github-runner-eromancer";
+            path = "/secrets/eromancer-github-token";
+          };
+    };
+    
+    services = {
+    
+      github-runners = {
+        panopticom = {
+            enable = true;
+            name = "panopticom-runner";
+            tokenFile = "/secrets/panopticom-github-token";
+            url = "https://github.com/panopticom";
+          };
+          eromancer = {
+            enable = true;
+            name = "eromancer-runner";
+            tokenFile = "/secrets/eromancer-github-token";
+            url = "https://github.com/eromancer-games";
+          };
+      };
+    
+    #github-nix-ci = {
+      #age.secretsDir = ./secrets; # Only if you use agenix
+     # extraPackages = [ 
+      #  "just"
+       # "ion"
+      #];
+      #orgRunners = {
+       # "panopticom".num = 3; # num is the number of parallel runners allowed
+      #  "Eromancer-Games".num = 3;
+      #};
+    #};
   
     samba = {
       enable = true;
