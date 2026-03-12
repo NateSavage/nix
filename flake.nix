@@ -3,20 +3,15 @@
 
   inputs = {
     # Pin nixpkgs to cosmic's version to avoid duplicate stores
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
-    nixpkgs.follows = "nixos-cosmic/nixpkgs";
+
+    nixpkgs.url = "github:nixos/nixpkgs/release-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    sops-nix = {
-      url = "github:mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    sops-nix.url = "github:mic92/sops-nix";
 
     # User flake: provides nixosModules.nate-desktop and nate-server
     nixos-user = {
       url = "github:NateSavage/nixos-user";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-      inputs.nixos-cosmic.follows = "nixos-cosmic";
     };
 
     nixos-wsl = {
