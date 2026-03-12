@@ -5,11 +5,12 @@
     # Nix ecosystem
     hardware.url = "github:nixos/nixos-hardware";
     systems.url = "github:nix-systems/default-linux";
-    nixpkgs.follows = "nixos-cosmic/nixpkgs";
+    nixpkgs-stable.follows = "nixos-cosmic/nixpkgs";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+
     # Home Manager
-    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixos-cosmic/nixpkgs";
     home-manager-unstable.url = "github:nix-community/home-manager";
     home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -17,7 +18,7 @@
     # Secrets Management
     sops-nix = {
       url = "github:mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
     # Desktop Environment
@@ -25,7 +26,7 @@
 
 	  # Additional flake dependencies
 	  nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-    impermanence.url = "github:misterio77/impermanence";
+    #impermanence.url = "github:misterio77/impermanesops-nix.inputs.nixpkgs.follows = "nixpkgs";  # so sops-nix also uses cosmic's nixpkgsnce";
     superfile.url = "github:yorukot/superfile";
 
     # special host specific flakes
@@ -36,7 +37,7 @@
     self,
     nixpkgs,
     nixpkgs-unstable,
-    nixpkgs-stable,
+    #nixpkgs-stable"sops-nix.inputs.nixpkgs.follows = "nixpkgs";  # so sops-nix also uses cosmic's nixpkgs,
     home-manager,
     home-manager-unstable,
     sops-nix,
@@ -64,7 +65,7 @@
     );
     stablePkgsFor = lib.genAttrs (import systems) (
       system:
-        import nixpkgs-stable {
+        import nixpkgs {
           inherit system;
           config.allowUnfree = true;
         }
@@ -119,16 +120,6 @@
         specialArgs = {inherit inputs outputs;};
       };
 
-      ## Personal Server.
-      nox = lib.nixosSystem {
-        modules = [
-          ./hosts/nox
-          sops-nix.nixosModules.sops
-          ./hosts/-features/services/the-forest-server.nix
-        ];
-        specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
-      };
-
       ##
       beepbox = lib.nixosSystem {
         modules = [
@@ -163,22 +154,6 @@
         specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
       };
 
-      gamebox = lib.nixosSystem {
-        modules = [
-          ./hosts/gamebox
-          jovian-nix.nixosModules.default
-          sops-nix.nixosModules.sops
-          nixos-cosmic.nixosModules.default
-          {
-            nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-            };
-          }
-        ];
-        specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
-      };
-
     };
 
     # Standalone home-manager configuration entrypoint
@@ -187,12 +162,6 @@
 
       "nate@whisp" = lib.homeManagerConfiguration {
         modules = [ ./home/nate/at/whisp.nix ];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
-      };
-
-      "nate@nox" = lib.homeManagerConfiguration {
-        modules = [ ./home/nate/at/nox.nix ];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = { inherit inputs outputs; };
       };

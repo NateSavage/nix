@@ -5,7 +5,7 @@
   #];
 
   environment.systemPackages = [
-    pkgsUnstable.godot_4-mono
-    pkgsUnstable.godot_4-export-templates
+    pkgsUnstable.godot_4
+    pkgsUnstable.godot_4-export-templates-bin
   ];
 }

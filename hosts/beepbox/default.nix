@@ -2,7 +2,7 @@
   imports = [
     ./hardware-configuration.nix
     ../-features/always
-    ../-features/desktops/cinnamon.nix
+    ../-features/desktops/cosmic.nix
 
     ../-features/security/nix-hardening.nix
 
