@@ -1,21 +1,17 @@
-# Used to help bootstrap new NixOS installations.
+# Bootstrap shell for setting up or managing machines.
+# Usage: nix-shell  (or: nix develop)
 
-{ pkgs ? import <nixpkgs> {}, ... }: {
-  default = pkgs.mkShell {
-    NIX_CONFIG = "extra-experimental-features = nix-command flakes ca-derivations";
-    nativeBuildInputs = with pkgs; [
-      nix
-      home-manager
+{ pkgs ? import <nixpkgs> {} }: pkgs.mkShell {
+  NIX_CONFIG = "extra-experimental-features = nix-command flakes";
+  nativeBuildInputs = with pkgs; [
+    nix
+    git
+    just
+    micro
+    nh
 
-      git
-      just
-      micro
-      nh
-
-      sops
-      ssh-to-age
-      gnupg
-      age
-    ];
-  };
+    sops
+    ssh-to-age
+    age
+  ];
 }

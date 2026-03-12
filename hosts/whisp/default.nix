@@ -1,19 +1,15 @@
-{
+{ lib, ... }: {
   imports = [
     ./hardware-configuration.nix
-    <nixos-wsl/modules>
-
-    ../../modules/always
-    ../../users/nate
+    ../common/core.nix
   ];
 
   wsl.enable = true;
-  wsl.defaultUser = "nate";
+  wsl.defaultUser = "nates";
 
-  networking = {
-    hostName = "whisp";
-  };
-
-  # I think I want to move this outside of the host and into the flake at the top level
+  networking.hostName = "whisp";
   system.stateVersion = "24.05";
+
+  # YubiKey is not available inside WSL
+  yubikey.enable = lib.mkForce false;
 }

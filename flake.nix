@@ -1,178 +1,65 @@
 {
-  description = "Nate's personal NixOS cluster flake.";
+  description = "Nate's personal machines.";
 
   inputs = {
-    # Nix ecosystem
-    hardware.url = "github:nixos/nixos-hardware";
-    systems.url = "github:nix-systems/default-linux";
-    nixpkgs-stable.follows = "nixos-cosmic/nixpkgs";
+    # Pin nixpkgs to cosmic's version to avoid duplicate stores
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    nixpkgs.follows = "nixos-cosmic/nixpkgs";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
-    # Home Manager
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
-    home-manager.inputs.nixpkgs.follows = "nixos-cosmic/nixpkgs";
-    home-manager-unstable.url = "github:nix-community/home-manager";
-    home-manager-unstable.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    # Secrets Management
     sops-nix = {
       url = "github:mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Desktop Environment
-    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    # User flake: provides nixosModules.nate-desktop and nate-server
+    nixos-user = {
+      url = "github:NateSavages/nixos-user";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.nixos-cosmic.follows = "nixos-cosmic";
+    };
 
-	  # Additional flake dependencies
-	  nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
-    #impermanence.url = "github:misterio77/impermanesops-nix.inputs.nixpkgs.follows = "nixpkgs";  # so sops-nix also uses cosmic's nixpkgsnce";
-    superfile.url = "github:yorukot/superfile";
-
-    # special host specific flakes
-    jovian-nix.url = "github:Jovian-Experiments/Jovian-NixOS";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nixpkgs-unstable,
-    #nixpkgs-stable"sops-nix.inputs.nixpkgs.follows = "nixpkgs";  # so sops-nix also uses cosmic's nixpkgs,
-    home-manager,
-    home-manager-unstable,
-    sops-nix,
-    nixos-cosmic,
-    jovian-nix,
-    nix-flatpak,
-    systems,
-    ...
-  } @inputs: let
-    inherit (self) outputs;
+  outputs = { self, nixpkgs, sops-nix, nixos-user, nixos-wsl, ... } @ inputs: {
 
-    # combine nix pkgs, home manager, and our flake's library into one attribute set.
-    lib = nixpkgs.lib // home-manager.lib;
-    lib-unstable = nixpkgs-unstable.lib // home-manager-unstable.lib;
-
-    lib-nate = (import ./lib).default { lib = nixpkgs.lib; };
-
-    forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
-    pkgsFor = lib.genAttrs (import systems) (
-      system:
-        import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        }
-    );
-    stablePkgsFor = lib.genAttrs (import systems) (
-      system:
-        import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        }
-    );
-    unstablePkgsFor = lib-unstable.genAttrs (import systems) (
-      system:
-        import nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-          config.permittedInsecurePackages = [
-            "dotnet-sdk-6.0.428"
-          ];
-        }
-    );
-
-
-    pkgsUnstable = unstablePkgsFor.x86_64-linux;
-    pkgsStable = stablePkgsFor.x86_64-linux;
-  in {
-
-    inherit lib;
-
-    # locations of things in the flake
-    osAppsPath = ./modules/apps;
-    osServicesPath = ./modules/services;
-    osFeaturesPath = ./modules/feature-sets;
-    usersPath = ./users;
-    hostsPath = ./hosts;
-
-
-    modules = lib-nate.importModulesRecursive ./modules;
-    #nixosModules = import ./modules/nixos;
-    #homeManagerModules = import ./modules/home-manager;
-    #overlays = import ./overlays {inherit inputs outputs;};
-
-    # Accessible through 'nix build', 'nix shell', etc
-    #packages = forEachSystem (pkgs: import ./pkgs {inherit pkgs;});
-    #devShells = forEachSystem (pkgs: import ./shell.nix {inherit pkgs;});
-
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
 
-      # Minimal configuration for setting up new nixos machines
-      bootstrap = lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-      };
-
-      # Windows Subsystem for Linux playground.
-      whisp = lib.nixosSystem {
-        modules = [./hosts/whisp];
-        specialArgs = {inherit inputs outputs;};
-      };
-
-      ##
-      beepbox = lib.nixosSystem {
+      # Desktop (AMD CPU + NVIDIA GPU)
+      beepbox = nixpkgs.lib.nixosSystem {
         modules = [
           ./hosts/beepbox
           sops-nix.nixosModules.sops
-          #nixos-cosmic.nixosModules.default
-          {
-            nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-            };
-          }
+          nixos-user.nixosModules.nate-desktop
         ];
-
-        specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
+        specialArgs = { inherit inputs; };
       };
 
-      ## Laptop.
-      snek = lib.nixosSystem {
+      # Laptop (Intel CPU + NVIDIA GPU)
+      snek = nixpkgs.lib.nixosSystem {
         modules = [
           ./hosts/snek
           sops-nix.nixosModules.sops
-          nixos-cosmic.nixosModules.default
-          {
-            nix.settings = {
-              substituters = [ "https://cosmic.cachix.org/" ];
-              trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-            };
-          }
+          nixos-user.nixosModules.nate-desktop
         ];
+        specialArgs = { inherit inputs; };
+      };
 
-        specialArgs = { inherit inputs outputs pkgsUnstable pkgsStable; };
+      # WSL2 on Windows
+      whisp = nixpkgs.lib.nixosSystem {
+        modules = [
+          ./hosts/whisp
+          nixos-wsl.nixosModules.default
+          nixos-user.nixosModules.nate-server
+        ];
+        specialArgs = { inherit inputs; };
       };
 
     };
 
-    # Standalone home-manager configuration entrypoint
-    # Available through 'home-manager --flake .#your-username@your-hostname'
-    homeConfigurations = {
-
-      "nate@whisp" = lib.homeManagerConfiguration {
-        modules = [ ./home/nate/at/whisp.nix ];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
-      };
-
-      "nate@snek" = lib.homeManagerConfiguration {
-        modules = [ ./home/nate/at/snek.nix
-        #  (inputs.home-manager-unstable + "/modules/programs/zed-editor.nix")
-        ];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = { inherit inputs outputs; };
-      };
-    };
   };
 }

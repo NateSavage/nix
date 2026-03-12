@@ -1,5 +1,0 @@
-**/git-crypt-secrets/** filter=git-crypt diff=git-crypt
-
-nixos/hosts/*/secrets/*.yaml diff=sopsdiffer
-nixos/common/secrets/*.yaml diff=sopsdiffer
-nix linguist-generated=true

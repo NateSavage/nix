@@ -1,47 +1,33 @@
-
-# default recipe to display help information
 default:
     @just --list
 
-test host-name: _ensure-all-files-in-git
-    nh os test ./ --hostname {{host-name}} --verbose -- --extra-experimental-features nix-command --extra-experimental-features flakes
+# Switch the local machine (run on the machine itself)
+switch: _ensure-git
+    nh os switch ./
 
-switch-os host-name: _ensure-all-files-in-git
-    nh os switch ./ --hostname {{host-name}} -- --extra-experimental-features nix-command --extra-experimental-features flakes
+# Build and test locally without setting as default boot entry
+test: _ensure-git
+    nh os test ./
 
-# updates contents of flake.lock file, builds, and switches to the fresh OS until reboot
-tryout-update host-name: _ensure-all-files-in-git
-    nh os test ./ -- update hostname {{host-name}} --extra-experimental-features nix-command --extra-experimental-features flakes
+# Deploy to a remote host over SSH — builds locally, activates remotely
+# Usage: just deploy beepbox   or   just deploy snek
+deploy host-name: _ensure-git
+    nixos-rebuild switch --flake .#{{host-name}} --target-host nates@{{host-name}} --use-remote-sudo
 
-# updates contents of flake.lock file, builds, and switches to the fresh OS while setting it as the default
-update host-name: _ensure-all-files-in-git
-    # TODO: accept hostname as an argument, if it's whisp we need to add "-- --impure" to the end of the command
-    nh os switch ./ -- update hostname {{host-name}} --extra-experimental-features nix-command --extra-experimental-features flakes
+# Update all flake inputs, then deploy
+update host-name: _ensure-git
+    nix flake update
+    nixos-rebuild switch --flake .#{{host-name}} --target-host nates@{{host-name}} --use-remote-sudo
 
-build-home host-name: _ensure-all-files-in-git
-    home-manager --flake .#nate@{{host-name}} build --extra-experimental-features nix-command --extra-experimental-features flakes
+# Get the age public key for the current host (run on the target machine after install)
+# Add the output to .sops.yaml, then run: just update-secrets
+get-age-key:
+    ssh-to-age < /etc/ssh/ssh_host_ed25519_key.pub
 
-switch-home host-name: _ensure-all-files-in-git
-    home-manager --flake .#nate@{{host-name}} switch -b backup --extra-experimental-features nix-command  --extra-experimental-features flakes --impure
-
-#
-# secrets and cryptography
-#
-# generates an age key for this host using the ssh key stored at /etc/ssh/ssh_host_ed25519_key.pub
-get-age-public-key:
-    nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
-
-# re-encrypts all secrets using the cluster's approved keys in the .sops.yaml file
+# Re-encrypt secrets after updating .sops.yaml with new keys
 update-secrets:
-    nix-shell -p sops --run 'sops updatekeys ./hosts/-features/security/secrets.yaml ./hosts/-features/services/syncthing/secrets.yaml ./users/nate/secrets.yaml'
+    sops updatekeys secrets/syncthing.yaml
 
-
-#
-# private methods
-#
-_ensure-all-files-in-git:
-  sudo git config --global --add safe.directory /etc/nixos
-  sudo git add -A
-
-# sync USER HOST:
-#  rsync -av --filter=':- .gitignore' -e "ssh -l {{USER}}" . {{USER}}@{{HOST}}:nix-config/
+_ensure-git:
+    sudo git config --global --add safe.directory /etc/nixos
+    sudo git add -A

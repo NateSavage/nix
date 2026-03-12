@@ -1,3 +1,0 @@
-{nixpkgs, ...}: {
-  imports = [../required];
-}
