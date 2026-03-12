@@ -11,7 +11,7 @@
   system.stateVersion = "25.05";
 
   boot.kernelParams = [ "psmouse.synaptics_intertouch=0" ];
-
+  
   yubikey.enable = true;
 
 }
