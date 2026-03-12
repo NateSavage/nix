@@ -12,12 +12,12 @@ test: _ensure-git
 # Deploy to a remote host over SSH — builds locally, activates remotely
 # Usage: just deploy beepbox   or   just deploy snek
 deploy host-name: _ensure-git
-    nixos-rebuild switch --flake .#{{host-name}} --target-host nates@{{host-name}} --sudo --impure
+    nixos-rebuild switch --flake .#{{host-name}} --target-host nates@{{host-name}}
 
 # Update all flake inputs, then deploy
 update host-name: _ensure-git
     nix flake update
-    nixos-rebuild switch --flake .#{{host-name}} --target-host nates@{{host-name}} --sudo --impure
+    nixos-rebuild switch --flake .#{{host-name}} --target-host nates@{{host-name}}
 
 # Get the age public key for the current host (run on the target machine after install)
 # Add the output to .sops.yaml, then run: just update-secrets

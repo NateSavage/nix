@@ -3,6 +3,7 @@
     ./hardware-configuration.nix
     ../common/core.nix
     ../common/security.nix
+    ../common/desktop.nix
 
     ../../users/admin.nix
   ];
