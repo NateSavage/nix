@@ -14,5 +14,4 @@
 
   yubikey.enable = true;
 
-  environment.systemPackages = [ pkgs.unityhub ];
 }

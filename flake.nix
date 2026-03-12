@@ -9,12 +9,12 @@
 
     sops-nix = {
       url = "github:mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # User flake: provides nixosModules.nate-desktop and nate-server
     nixos-user = {
-      url = "github:NateSavages/nixos-user";
+      url = "github:NateSavage/nixos-user";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
       inputs.nixos-cosmic.follows = "nixos-cosmic";
     };
