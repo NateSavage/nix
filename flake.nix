@@ -46,7 +46,7 @@
 
             services.openclaw = {
               enable = true;
-              package = openclaw-nix.packages.${pkgs.system}.openclaw;
+              package = openclaw-nix.packages.${pkgs.stdenv.hostPlatform.system}.openclaw;
               domain = "agents.panopticom.online";
               openFirewall = true;
               ollama = {
