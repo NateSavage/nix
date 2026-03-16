@@ -2,8 +2,8 @@
 # To get a host's age key after first boot, run: just get-age-key
 # After adding a new key, run: just update-secrets
 keys:
-  - &master age1y8nuphjav485gh27rgswe5dqvq3mpg8zk39g5hlhfc8cj44nxsdss2nchv  # your personal age key
-  - &beepbox age1CHANGEME  # beepbox: run `just get-age-key` on beepbox after first install
+  - &master age1y8nuphjav485gh27rgswe5dqvq3mpg8zk39g5hlhfc8cj44nxsdss2nchv
+  - &beepbox age1heync7a8nx737ety30f5dykyj53geeqsxgmdqkrcs5lp4grw2a0sq4pptz
   - &snek age1q5mmdvv7p7mzt6rhn0l55lhfkscq3khqkjagvfy7rdd7mf2neplqxu5jlv
   - &whisp age1g5d8prqmjcdzfvfheesp5drka96t8zakmpjjefepw57tr9fylqsshe6606
 
@@ -15,3 +15,9 @@ creation_rules:
           - *beepbox
           - *snek
           - *whisp
+
+  - path_regex: hosts/beepbox/secrets\.yaml$
+    key_groups:
+      - age:
+          - *master
+          - *beepbox

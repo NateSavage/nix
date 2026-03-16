@@ -37,13 +37,25 @@
           nixos-user.nixosModules.nate-desktop
           openclaw-nix.nixosModules.default
           openclaw-nix.nixosModules.ollama
-          {
-            services.openclaw.enable = true;
-            services.openclaw.ollama = {
-              enable = true;
-              acceleration = "cuda";
+          ({ config, ... }: {
+            sops.secrets."openclaw/discord-token" = {
+              sopsFile = ./hosts/beepbox/secrets.yaml;
+              owner = "openclaw";
+              group = "openclaw";
             };
-          }
+
+            services.openclaw = {
+              enable = true;
+              ollama = {
+                enable = true;
+                acceleration = "cuda";
+              };
+              discord = {
+                enable = true;
+                tokenFile = config.sops.secrets."openclaw/discord-token".path;
+              };
+            };
+          })
         ];
         specialArgs = { inherit inputs; };
       };
