@@ -19,13 +19,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    martin = {
-         url = "github:NateSavage/martin";
-         inputs.nixpkgs.follows = "nixpkgs";
-       };
+    openclaw-nix = {
+      url = "github:NateSavage/openclaw-nix-localhost";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, sops-nix, nixos-user, nixos-wsl, martin, ... } @ inputs: {
+  outputs = { self, nixpkgs, sops-nix, nixos-user, nixos-wsl, openclaw-nix, ... } @ inputs: {
 
     nixosConfigurations = {
 
@@ -35,9 +35,14 @@
           ./hosts/beepbox
           sops-nix.nixosModules.sops
           nixos-user.nixosModules.nate-desktop
-          martin.nixosModules.default {
-            martin.acceleration = "cuda";
-            sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+          openclaw-nix.nixosModules.default
+          openclaw-nix.nixosModules.ollama
+          {
+            services.openclaw.enable = true;
+            services.openclaw.ollama = {
+              enable = true;
+              acceleration = "cuda";
+            };
           }
         ];
         specialArgs = { inherit inputs; };
