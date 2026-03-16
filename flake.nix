@@ -37,7 +37,7 @@
           nixos-user.nixosModules.nate-desktop
           openclaw-nix.nixosModules.default
           openclaw-nix.nixosModules.ollama
-          ({ config, ... }: {
+          ({ config, pkgs, ... }: {
             sops.secrets."openclaw/discord-token" = {
               sopsFile = ./hosts/beepbox/secrets.yaml;
               owner = "openclaw";
@@ -46,6 +46,9 @@
 
             services.openclaw = {
               enable = true;
+              package = openclaw-nix.packages.${pkgs.system}.openclaw;
+              domain = "agents.panopticom.online";
+              openFirewall = true;
               ollama = {
                 enable = true;
                 acceleration = "cuda";
