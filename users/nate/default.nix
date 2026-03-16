@@ -59,16 +59,6 @@ in {
     };
   };
 
-  home-manager.extraSpecialArgs = { inherit inputs; };
-  home-manager.users.nate = {
-    imports = [
-      ../../home/nate/at/${config.networking.hostName}.nix
-      unstable-zed-editor
-      #(inputs.home-manager-unstable + "modules/programs/zed-editor.nix")
-    ];
-
-  };
-
   #security.pam.services = {
   #  swaylock = {};
   #};

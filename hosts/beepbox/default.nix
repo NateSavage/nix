@@ -17,4 +17,6 @@
 
   yubikey.enable = true;
 
+  nixpkgs.config.allowAliases = false;
+
 }

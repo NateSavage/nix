@@ -18,9 +18,14 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    martin = {
+         url = "github:NateSavage/martin";
+         inputs.nixpkgs.follows = "nixpkgs";
+       };
   };
 
-  outputs = { self, nixpkgs, sops-nix, nixos-user, nixos-wsl, ... } @ inputs: {
+  outputs = { self, nixpkgs, sops-nix, nixos-user, nixos-wsl, martin, ... } @ inputs: {
 
     nixosConfigurations = {
 
@@ -30,6 +35,10 @@
           ./hosts/beepbox
           sops-nix.nixosModules.sops
           nixos-user.nixosModules.nate-desktop
+          martin.nixosModules.default {
+            martin.acceleration = "cuda";
+            sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+          }
         ];
         specialArgs = { inherit inputs; };
       };
