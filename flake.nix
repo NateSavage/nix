@@ -19,13 +19,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    openclaw-nix = {
-      url = "github:NateSavage/openclaw-nix-localhost";
-      inputs.nixpkgs.follows = "nixpkgs";
+    local-claw = {
+      url = "path:./submodules/local-claw";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
-  outputs = { self, nixpkgs, sops-nix, nixos-user, nixos-wsl, openclaw-nix, ... } @ inputs: {
+  outputs = { self, nixpkgs, sops-nix, nixos-user, nixos-wsl, local-claw, ... } @ inputs: {
 
     nixosConfigurations = {
 
@@ -35,37 +35,35 @@
           ./hosts/beepbox
           sops-nix.nixosModules.sops
           nixos-user.nixosModules.nate-desktop
-          openclaw-nix.nixosModules.default
-          openclaw-nix.nixosModules.ollama
-          ({ config, pkgs, ... }: {
-            sops.secrets."openclaw/discord-token" = {
-              sopsFile = ./hosts/beepbox/secrets.yaml;
-              owner = "martin";
-              group = "the-claw";
-            };
+          local-claw.nixosModules.default
+          { nixpkgs.overlays = [ local-claw.overlays.default ]; }
+          {
+            services.localclaw = {
+              enable       = true;
+              serveGateway = "lan";
+              acceleration = "cuda";
 
-            services.openclaw = {
-              enable = true;
-              package = openclaw-nix.packages.${pkgs.stdenv.hostPlatform.system}.openclaw;
-              user = "martin";
-              group = "the-claw";
-              domain = "";        # HAProxy on nox handles TLS — no Caddy needed
-              openFirewall = false;
-              extraGatewayConfig = {
-                host = "0.0.0.0"; # bind to LAN so HAProxy can reach it
+              models."martin-reasoning" = {
+                source        = "hf.co/Jackrong/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF:Q4_K_M";
+                contextLength = 262144;
+                temperature   = 1.0;
+                topP          = 0.95;
+                topK          = 20;
+                minP          = 0.0;
+                repeatPenalty = 1.0;
               };
-              ollama = {
-                enable = true;
-                acceleration = "cuda";
-              };
-              discord = {
-                enable = true;
-                tokenFile = config.sops.secrets."openclaw/discord-token".path;
-              };
-            };
 
-            networking.firewall.allowedTCPPorts = [ 3000 ];
-          })
+              #models."martin-coding" = {
+              #  source        = "hf.co/Jackrong/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF:Q4_K_M";
+              #  contextLength = 262144;
+              #  temperature   = 1.0;
+              #  topP          = 0.95;
+              #  topK          = 20;
+              #  minP          = 0.0;
+              #  repeatPenalty = 1.0;
+              #};
+            };
+          }
         ];
         specialArgs = { inherit inputs; };
       };
