@@ -47,8 +47,11 @@
             services.openclaw = {
               enable = true;
               package = openclaw-nix.packages.${pkgs.stdenv.hostPlatform.system}.openclaw;
-              domain = "agents.panopticom.online";
-              openFirewall = true;
+              domain = "";        # HAProxy on nox handles TLS — no Caddy needed
+              openFirewall = false;
+              extraGatewayConfig = {
+                host = "0.0.0.0"; # bind to LAN so HAProxy can reach it
+              };
               ollama = {
                 enable = true;
                 acceleration = "cuda";
@@ -58,6 +61,8 @@
                 tokenFile = config.sops.secrets."openclaw/discord-token".path;
               };
             };
+
+            networking.firewall.allowedTCPPorts = [ 3000 ];
           })
         ];
         specialArgs = { inherit inputs; };
