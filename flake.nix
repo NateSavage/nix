@@ -40,13 +40,15 @@
           ({ config, pkgs, ... }: {
             sops.secrets."openclaw/discord-token" = {
               sopsFile = ./hosts/beepbox/secrets.yaml;
-              owner = "openclaw";
-              group = "openclaw";
+              owner = "martin";
+              group = "the-claw";
             };
 
             services.openclaw = {
               enable = true;
               package = openclaw-nix.packages.${pkgs.stdenv.hostPlatform.system}.openclaw;
+              user = "martin";
+              group = "the-claw";
               domain = "";        # HAProxy on nox handles TLS — no Caddy needed
               openFirewall = false;
               extraGatewayConfig = {
@@ -63,11 +65,6 @@
             };
 
             networking.firewall.allowedTCPPorts = [ 3000 ];
-
-            # AF_NETLINK is needed by Node.js getifaddrs() to enumerate network interfaces
-            systemd.services.openclaw-gateway.serviceConfig.RestrictAddressFamilies = [
-              "AF_INET" "AF_INET6" "AF_UNIX" "AF_NETLINK"
-            ];
           })
         ];
         specialArgs = { inherit inputs; };
