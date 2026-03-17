@@ -63,6 +63,11 @@
             };
 
             networking.firewall.allowedTCPPorts = [ 3000 ];
+
+            # AF_NETLINK is needed by Node.js getifaddrs() to enumerate network interfaces
+            systemd.services.openclaw-gateway.serviceConfig.RestrictAddressFamilies = [
+              "AF_INET" "AF_INET6" "AF_UNIX" "AF_NETLINK"
+            ];
           })
         ];
         specialArgs = { inherit inputs; };
