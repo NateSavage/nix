@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, config, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common/core.nix
@@ -32,5 +32,40 @@
     HandleLidSwitchExternalPower=ignore
     IdleAction=ignore
   '';
+
+  # ── Secrets ───────────────────────────────────────────────────────────────
+  sops.defaultSopsFile = ./secrets.yaml;
+
+  sops.secrets."openclaw.discord-token".owner = "localclaw";
+
+  # ── LocalClaw ─────────────────────────────────────────────────────────────
+  nixpkgs.overlays = [ inputs.local-claw.overlays.default ];
+
+  services.localclaw = {
+    enable       = true;
+    serveGateway = "lan";
+    acceleration = "cuda";
+
+    models."martin-reasoning" = {
+      source        = "hf.co/Jackrong/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF:Q4_K_M";
+      contextLength = 262144;
+      temperature   = 1.0;
+      topP          = 0.95;
+      topK          = 20;
+      minP          = 0.0;
+      repeatPenalty = 1.0;
+    };
+
+    agents."martin" = {
+      model   = "ollama/martin-reasoning";
+      name    = "Martin";
+      default = true;
+    };
+
+    discord = {
+      enable    = true;
+      tokenFile = config.sops.secrets."openclaw.discord-token".path;
+    };
+  };
 
 }

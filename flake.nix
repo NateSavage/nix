@@ -36,34 +36,6 @@
           sops-nix.nixosModules.sops
           nixos-user.nixosModules.nate-desktop
           local-claw.nixosModules.default
-          { nixpkgs.overlays = [ local-claw.overlays.default ]; }
-          {
-            services.localclaw = {
-              enable       = true;
-              serveGateway = "lan";
-              acceleration = "cuda";
-
-              models."martin-reasoning" = {
-                source        = "hf.co/Jackrong/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF:Q4_K_M";
-                contextLength = 262144;
-                temperature   = 1.0;
-                topP          = 0.95;
-                topK          = 20;
-                minP          = 0.0;
-                repeatPenalty = 1.0;
-              };
-
-              #models."martin-coding" = {
-              #  source        = "hf.co/Jackrong/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF:Q4_K_M";
-              #  contextLength = 262144;
-              #  temperature   = 1.0;
-              #  topP          = 0.95;
-              #  topK          = 20;
-              #  minP          = 0.0;
-              #  repeatPenalty = 1.0;
-              #};
-            };
-          }
         ];
         specialArgs = { inherit inputs; };
       };
