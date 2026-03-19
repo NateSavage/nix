@@ -56,6 +56,16 @@
       repeatPenalty = 1.0;
     };
 
+    models."martin-programming" = {
+      source        = "hf.co/unsloth/Qwen3.5-35B-A3B-MXFP4_MOE.gguf";
+      contextLength = 262144;
+      temperature   = 0.6;
+      topP          = 0.95;
+      topK          = 20;
+      minP          = 0.0;
+      repeatPenalty = 0.3;
+    }
+
     agents."martin" = {
       model   = "ollama/martin-reasoning";
       name    = "Martin";
