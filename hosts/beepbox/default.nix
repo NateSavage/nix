@@ -64,7 +64,7 @@
       topK          = 20;
       minP          = 0.0;
       repeatPenalty = 0.3;
-    }
+    };
 
     agents."martin" = {
       model   = "ollama/martin-reasoning";
