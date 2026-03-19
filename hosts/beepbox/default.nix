@@ -49,7 +49,7 @@
     models."martin-reasoning" = {
       #source        = "hf.co/Jackrong/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF:Q4_K_M";
       source        = "qwen3.5:27b";
-      contextLength = 32768;
+      contextLength = 16384;
       temperature   = 1.0;
       topP          = 0.95;
       topK          = 20;
