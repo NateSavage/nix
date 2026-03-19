@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1773889424,
-        "narHash": "sha256-w9jGX/aLU3PxXxbp1bBm4wPqN3T3coiX3n4qhHJtitM=",
+        "lastModified": 1773901684,
+        "narHash": "sha256-XjJAQVFGwfvQ659mgHn7bSREQEwhf3KhEjzI6speMlw=",
         "owner": "NateSavage",
         "repo": "local-claw",
-        "rev": "5dc284ce4a0ebca13b6f0d5c64b0d702d6a603be",
+        "rev": "2febbed3585467b9c9f7d9817f4055623d42e3b8",
         "type": "github"
       },
       "original": {

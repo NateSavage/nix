@@ -74,7 +74,7 @@
 
     discord = {
       enable    = true;
-      tokenFile = config.sops.secrets."openclaw.discord-token".path;
+      tokenFile = "/var/lib/localclaw/discord-bot-token";
     };
   };
 
