@@ -9,10 +9,15 @@ in {
 
   networking.networkmanager.enable = true;
 
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   hardware.nvidia = {
     modesetting.enable = true;
     nvidiaSettings = true;
+    open = false;
   };
+
+  hardware.graphics.enable = true;
 
   # Required for some app portals (e.g. Unity Hub sign-in)
   xdg.portal = {
