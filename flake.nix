@@ -20,7 +20,7 @@
     };
 
     local-claw = {
-      url = "path:./submodules/local-claw";
+      url = "github:NateSavage/local-claw";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };

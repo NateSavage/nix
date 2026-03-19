@@ -3,9 +3,10 @@
 # After adding a new key, run: just update-secrets
 keys:
   - &master age1y8nuphjav485gh27rgswe5dqvq3mpg8zk39g5hlhfc8cj44nxsdss2nchv
-  - &beepbox age1uwl87ufeyu06qaxm73vz52zds3cfvznf9js4mt9xmtj54fe054wsmjdfc2
+  - &beepbox age1heync7a8nx737ety30f5dykyj53geeqsxgmdqkrcs5lp4grw2a0sq4pptz
   - &snek age1q5mmdvv7p7mzt6rhn0l55lhfkscq3khqkjagvfy7rdd7mf2neplqxu5jlv
   - &whisp age1g5d8prqmjcdzfvfheesp5drka96t8zakmpjjefepw57tr9fylqsshe6606
+  - &nates age1uwl87ufeyu06qaxm73vz52zds3cfvznf9js4mt9xmtj54fe054wsmjdfc2
 
 creation_rules:
   - path_regex: secrets/.*\.(yaml|json|env|ini)$
@@ -15,9 +16,11 @@ creation_rules:
           - *beepbox
           - *snek
           - *whisp
+          - *nates
 
   - path_regex: hosts/beepbox/secrets\.yaml$
     key_groups:
       - age:
           - *master
           - *beepbox
+          - *nates

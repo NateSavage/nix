@@ -27,6 +27,7 @@ get-age-key:
 # Re-encrypt secrets after updating .sops.yaml with new keys
 update-secrets:
     sops updatekeys secrets/syncthing.yaml
+    sops updatekeys hosts/beepbox/secrets.yaml
 
 _ensure-git:
     sudo git config --global --add safe.directory /etc/nixos
