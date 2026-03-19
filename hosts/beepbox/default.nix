@@ -57,7 +57,7 @@
     };
 
     models."martin-programming" = {
-      source        = "hf.co/unsloth/Qwen3.5-35B-A3B-MXFP4_MOE.gguf";
+      source        = "hf.co/unsloth/Qwen3.5-35B-A3B-GGUF:MXFP4_MOE";
       contextLength = 262144;
       temperature   = 0.6;
       topP          = 0.95;
