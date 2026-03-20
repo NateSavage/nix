@@ -47,9 +47,9 @@
     modelBackend = "vllm";
 
     vllm = {
-      model                = "cyankiwi/OmniCoder-9B-AWQ-BF16-INT4";
-      servedModelName      = "OmniCoder-9B";
-      quantization         = null;
+      model                = "QuantTrio/Qwen3.5-9B-AWQ";
+      servedModelName      = "Qwen3.5-9B";
+      quantization         = "awq_marlin";
       maxModelLen          = 32768;
       gpuMemoryUtilization = 0.92;
       enablePrefixCaching  = true;
@@ -57,7 +57,7 @@
     };
 
     agents."martin" = {
-      model   = "vllm/OmniCoder-9B";
+      model   = "vllm/Qwen3.5-9B";
       name    = "Martin";
       default = true;
     };
