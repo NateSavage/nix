@@ -45,30 +45,21 @@
     enable       = true;
     serveGateway = "lan";
     acceleration = "cuda";
+    modelBackend = "vllm";
 
-    models."martin-reasoning" = {
-      #source        = "hf.co/Jackrong/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF:Q4_K_M";
-      source        = "qwen3.5:27b";
-      contextLength = 16384;
-      temperature   = 1.0;
-      topP          = 0.95;
-      topK          = 20;
-      minP          = 0.0;
-      repeatPenalty = 1.0;
-    };
-
-    models."martin-programming" = {
-      source        = "hf.co/unsloth/Qwen3.5-35B-A3B-GGUF:MXFP4_MOE";
-      contextLength = 262144;
-      temperature   = 0.6;
-      topP          = 0.95;
-      topK          = 20;
-      minP          = 0.0;
-      repeatPenalty = 0.3;
+    vllm = {
+      model                = "Qwen/Qwen3.5-27B-GPTQ-Int4";
+      servedModelName      = "Qwen3.5-27B";
+      quantization         = "gptq";
+      maxModelLen          = 40960;
+      gpuMemoryUtilization = 0.92;
+      languageModelOnly    = true;
+      enablePrefixCaching  = true;
+      reasoningParser      = "qwen3";
     };
 
     agents."martin" = {
-      model   = "ollama/martin-reasoning";
+      model   = "vllm/Qwen3.5-27B";
       name    = "Martin";
       default = true;
     };
