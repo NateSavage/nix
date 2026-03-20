@@ -45,6 +45,7 @@
     serveGateway = "lan";
     acceleration = "cuda";
     modelBackend = "vllm";
+    adminUsers   = [ "nates" ];
 
     vllm = {
       model                = "QuantTrio/Qwen3.5-9B-AWQ";
