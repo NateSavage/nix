@@ -17,7 +17,6 @@
 
   yubikey.enable = true;
 
-  nixpkgs.config.allowAliases = false;
 
   # Never sleep or suspend
   systemd.sleep.extraConfig = ''
