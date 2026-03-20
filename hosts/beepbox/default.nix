@@ -47,21 +47,17 @@
     modelBackend = "vllm";
 
     vllm = {
-      model                = "Qwen/Qwen3.5-27B-GPTQ-Int4";
-      servedModelName      = "Qwen3.5-27B";
-      quantization         = "gptq_marlin";
-      maxModelLen          = 16384;
+      model                = "cyankiwi/OmniCoder-9B-AWQ-BF16-INT4";
+      servedModelName      = "OmniCoder-9B";
+      quantization         = "awq_marlin";
+      maxModelLen          = 32768;
       gpuMemoryUtilization = 0.92;
-      languageModelOnly    = true;
       enablePrefixCaching  = true;
       reasoningParser      = "qwen3";
-      # Disable CUDA graph captures to recover ~4-6 GB of VRAM. Reduces
-      # batched throughput but is fine for single-user assistant workloads.
-      extraArgs            = [ "--enforce-eager" ];
     };
 
     agents."martin" = {
-      model   = "vllm/Qwen3.5-27B";
+      model   = "vllm/OmniCoder-9B";
       name    = "Martin";
       default = true;
     };
