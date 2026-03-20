@@ -1,4 +1,4 @@
-{ pkgs, inputs, config, ... }: {
+{ pkgs, inputs, config, lib, ... }: {
   imports = [
     ./hardware-configuration.nix
     ../common/core.nix
@@ -17,6 +17,14 @@
 
   yubikey.enable = true;
 
+  nix.settings = {
+    substituters = [
+      "https://cache.nixos.org"
+    ];
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+    ];
+  };
 
   # Never sleep or suspend
   systemd.sleep.extraConfig = ''
@@ -34,14 +42,6 @@
 
   # ── Secrets ───────────────────────────────────────────────────────────────
   sops.defaultSopsFile = ./secrets.yaml;
-
-  sops.secrets."openclaw.discord-token".owner = "localclaw";
-
-  # ── n8n ───────────────────────────────────────────────────────────────────
-  services.n8n = {
-    enable      = true;
-    openFirewall = true;
-  };
 
   # ── LocalClaw ─────────────────────────────────────────────────────────────
   nixpkgs.overlays = [ inputs.local-claw.overlays.default ];
@@ -70,17 +70,7 @@
       default = true;
     };
 
-    acp = {
-      enable       = true;
-      defaultAgent = "martin";
-    };
   };
-
-    discord = {
-      enable    = true;
-      tokenFile = "/var/lib/localclaw/discord-bot-token";
-    };
-  services.openclaw.clawvault.enable = false;
 
   # ── n8n ───────────────────────────────────────────────────────────────────
   services.n8n = {
