@@ -49,7 +49,7 @@
     vllm = {
       model                = "Qwen/Qwen3.5-27B-GPTQ-Int4";
       servedModelName      = "Qwen3.5-27B";
-      quantization         = "gptq";
+      quantization         = "gptq_marlin";
       maxModelLen          = 40960;
       gpuMemoryUtilization = 0.92;
       languageModelOnly    = true;
