@@ -79,6 +79,12 @@
       enable    = true;
       tokenFile = "/var/lib/localclaw/discord-bot-token";
     };
+  services.openclaw.clawvault.enable = false;
+
+  # ── n8n ───────────────────────────────────────────────────────────────────
+  services.n8n = {
+    enable      = true;
+    openFirewall = true;
   };
 
 }
