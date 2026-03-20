@@ -55,6 +55,9 @@
       languageModelOnly    = true;
       enablePrefixCaching  = true;
       reasoningParser      = "qwen3";
+      # Disable CUDA graph captures to recover ~4-6 GB of VRAM. Reduces
+      # batched throughput but is fine for single-user assistant workloads.
+      extraArgs            = [ "--enforce-eager" ];
     };
 
     agents."martin" = {
