@@ -45,7 +45,8 @@
     serveGateway = "lan";
     acceleration = "cuda";
     modelBackend = "vllm";
-    adminUsers   = [ "nates" ];
+    adminUsers    = [ "nates" ];
+    extraPackages = with pkgs; [ go ripgrep fd ];
 
     vllm = {
       model                = "QuantTrio/Qwen3.5-9B-AWQ";
