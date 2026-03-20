@@ -49,7 +49,7 @@
     vllm = {
       model                = "cyankiwi/OmniCoder-9B-AWQ-BF16-INT4";
       servedModelName      = "OmniCoder-9B";
-      quantization         = "awq_marlin";
+      quantization         = null;
       maxModelLen          = 32768;
       gpuMemoryUtilization = 0.92;
       enablePrefixCaching  = true;
