@@ -50,7 +50,7 @@
       model                = "Qwen/Qwen3.5-27B-GPTQ-Int4";
       servedModelName      = "Qwen3.5-27B";
       quantization         = "gptq_marlin";
-      maxModelLen          = 40960;
+      maxModelLen          = 32768;
       gpuMemoryUtilization = 0.92;
       languageModelOnly    = true;
       enablePrefixCaching  = true;
