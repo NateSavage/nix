@@ -63,6 +63,11 @@
       default = true;
     };
 
+    acp = {
+      enable       = true;
+      defaultAgent = "martin";
+    };
+
     discord = {
       enable    = true;
       tokenFile = "/var/lib/localclaw/discord-bot-token";
