@@ -74,6 +74,7 @@
       enable       = true;
       defaultAgent = "martin";
     };
+  };
 
     discord = {
       enable    = true;
