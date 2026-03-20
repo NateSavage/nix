@@ -37,6 +37,12 @@
 
   sops.secrets."openclaw.discord-token".owner = "localclaw";
 
+  # ── n8n ───────────────────────────────────────────────────────────────────
+  services.n8n = {
+    enable      = true;
+    openFirewall = true;
+  };
+
   # ── LocalClaw ─────────────────────────────────────────────────────────────
   nixpkgs.overlays = [ inputs.local-claw.overlays.default ];
 
